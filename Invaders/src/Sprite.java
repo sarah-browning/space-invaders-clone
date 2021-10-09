@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 
 public class Sprite {
 
-	//Declarations
+	//Attributes
 	protected int x, y;
 	protected int width, height;
 	protected String filename;
