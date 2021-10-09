@@ -1,14 +1,18 @@
-import javax.swing.JLabel;
-
 public class Starship extends Sprite {
-
-	//Attributes
-	private Boolean visible, moving;
 	
+	//Attributes
+	Boolean dying;
+	
+	//Getters
+	public Boolean getDying() { return dying; }
+	
+	//Setters
+	public void setDying(Boolean dying) { this.dying = dying;}
+	
+	//Constructor
 	public Starship() {
 		super(67, 59,"placeholder-ship.png");
-		visible = false;
-		moving = false;
+		this.dying = false;
 		//TODO: Add proper height,width, filename
 	}
 	

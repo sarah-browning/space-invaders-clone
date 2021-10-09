@@ -12,6 +12,7 @@ public class Sprite {
 	protected int width, height;
 	protected String filename;
 	protected Rectangle r;
+	protected Boolean visible, moving;
 	
 	//Getters
 	public int getX() { return x; }
@@ -20,6 +21,8 @@ public class Sprite {
 	public int getHeight() { return height; }
 	public String getFilename() { return filename; }
 	public Rectangle getRectangle() { return r; }
+	public Boolean getVisible() { return visible; }
+	public Boolean getMoving() { return moving; }
 	
 	//Setters
 	public void setX(int x) { this.x = x; }
@@ -28,6 +31,8 @@ public class Sprite {
 	public void setHeight(int height) { this.height = height; }
 	public void setFilename(String filename) { this.filename = filename; }
 	public void setRectangel(Rectangle r) { this.r = r; }
+	public void setVisible(Boolean visible) { this.visible = visible;}
+	public void setMoving(Boolean moving) { this.moving = moving;}	
 	
 	//Constructors
 	public Sprite() {
@@ -38,9 +43,11 @@ public class Sprite {
 		this.height = 0;
 		this.filename = "";
 		this.r = new Rectangle(this.x, this.y, this.width, this.height);
+		this.visible = true;
+		this.moving = false;
 	}
 	
-	public Sprite(int x, int y, int width, int height, String filename, Rectangle r) {
+	public Sprite(int x, int y, int width, int height, String filename, Rectangle r, Boolean visible, Boolean moving) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -48,6 +55,8 @@ public class Sprite {
 		this.height = height;
 		this.filename = filename;
 		this.r = new Rectangle(this.x, this.y, this.width, this.height);
+		this.visible = true;
+		this.moving = false;
 	}
 	
 	public Sprite(int width, int height, String filename) {
@@ -58,6 +67,8 @@ public class Sprite {
 		this.height = height;
 		this.filename = filename;
 		this.r = new Rectangle(this.x, this.y, this.width, this.height);
+		this.visible = true;
+		this.moving = false;
 	}
 	
 	//Display
