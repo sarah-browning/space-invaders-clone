@@ -14,6 +14,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener {
 	private Alien myAliens;
 	private Starship myStarship;
 	
+	//Labels to Display Graphics
 	private JLabel AlienLabel, BackgroundLabel, StarshipLabel;
 	
 	//Container to hold graphics
@@ -25,48 +26,51 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener {
 		setSize(GameProperties.SCREEN_WIDTH, GameProperties.SCREEN_HEIGHT);
 		setResizable(false);
 		
+		content = getContentPane();
+		content.setBackground(Color.black);		
+		//Set layout manager to null to allow absolute positioning
+		setLayout(null);
+		
 		BackgroundLabel = new JLabel( new ImageIcon("./images/background.jpg") );
 		BackgroundLabel.setSize(GameProperties.SCREEN_WIDTH, GameProperties.SCREEN_HEIGHT);
 
-//	Alternate method of drawing images:
+//	TODO: Alternate method of drawing images - may work better for Alien display - more research needed
+//				https://docs.oracle.com/javase/tutorial/2d/images/index.html
+//
 //		panel = new JPanel() {
 //			
 //			protected void paintComponent (Graphics g) {
 //				BufferedImage background;
 //				try {
-//					img = ImageIO.read(new File("C:\\Image\\Location.jpg"));
+//					img = ImageIO.read(new File("images/background.jpg"));
 //					g.drawImage(background, 0, 0, 900, 650, null);
 //				} catch (IOException e) {
 //					e.printStackTrace();
 //				}
 //			}
-//		};
-		
-		//Create new player starship
+//		};		
+	
+		//Create new player Starship
 		myStarship = new Starship();
+		myStarship.setX(400);
+		myStarship.setY(500);
 		StarshipLabel = new JLabel( new ImageIcon( getClass().getResource( myStarship.getFilename() ) ));
 		StarshipLabel.setSize( myStarship.getWidth(), myStarship.getHeight() );
-		myStarship.setX(450);
-		myStarship.setY(600);
-//		System.out.println("Starship X: " + myStarship.getX() + " Starship Y: " + myStarship.getY());
-		//TODO: Determine why Starship isn't displaying at proper x, y values
+		StarshipLabel.setLocation(myStarship.getX(), myStarship.getY());
 		
-		//Create Alien Arrays
-//		myAliens = new Alien();
-//		AlienLabel = new JLabel( new ImageIcon( getClass().getResource( myAliens.getFilename() ) ));
-//		AlienLabel.setSize( myAliens.getWidth(), myAliens.getHeight() );
-//		myAliens.setX(100);
-//		myAliens.setY(80);
+		//Create Alien Array
+		myAliens = new Alien();
+		myAliens.setX(80);
+		myAliens.setY(50);
+		AlienLabel = new JLabel( new ImageIcon( getClass().getResource( myAliens.getFilename() ) ));
+		AlienLabel.setSize( myAliens.getWidth(), myAliens.getHeight() );
+		AlienLabel.setLocation( myAliens.getX(), myAliens.getY() );
+		
 		//TODO: Create vertical and horizontal array of aliens in Alien.java => 11 per line
+
 		
-		
-		content = getContentPane();
-		content.setBackground(Color.black);		
-		//Set layout manager to null to allow absolute positioning
-		content.setLayout(null);
-		
-		//Add elements to window
-//		add(AlienLabel);
+		//Add components to window
+		add(AlienLabel);
 		add(StarshipLabel);
 		add(BackgroundLabel);
 		
