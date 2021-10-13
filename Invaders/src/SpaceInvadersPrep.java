@@ -25,7 +25,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener {
 		setSize(GameProperties.SCREEN_WIDTH, GameProperties.SCREEN_HEIGHT);
 		setResizable(false);
 		
-		BackgroundLabel = new JLabel( new ImageIcon("./background.jpg") );
+		BackgroundLabel = new JLabel( new ImageIcon("./images/background.jpg") );
 		BackgroundLabel.setSize(GameProperties.SCREEN_WIDTH, GameProperties.SCREEN_HEIGHT);
 
 //	Alternate method of drawing images:
