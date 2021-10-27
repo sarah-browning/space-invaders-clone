@@ -76,6 +76,19 @@ public class Sprite {
 		this.dying = false;
 	}
 	
+	public Sprite(int x, int y, int width, int height, String filename) {
+		super();
+		this.x = 0;
+		this.y = 0;
+		this.width = width;
+		this.height = height;
+		this.filename = filename;
+		this.r = new Rectangle(this.x, this.y, this.width, this.height);
+		this.visible = true;
+		this.moving = false;
+		this.dying = false;
+	}
+	
 	//Display
 	public void Display() {
 		System.out.println("x, y is " + this.x + "," + this.y);

@@ -1,12 +1,22 @@
-
 public class Alien extends Sprite {
-		
-	//Constructor
-	public Alien() {
-		super(50, 50,"images/alien1.png");
+	
+	//declarations
+	protected int pointValue;
+	
+	//getters
+	public int getPointValue() {
+		return pointValue;
 	}
 	
-	//	private int[] aliensX = new int[33];
-	//	private int[] aliensY = new int[33];
-		
+	//setters
+	public void setPointValue(int pointValue) {
+		this.pointValue = pointValue;
+	}
+
+	//Constructors
+	public Alien() {
+		super(50, 50,"images/alien1.png");
+		this.pointValue = 20;
+	}
+	
 }

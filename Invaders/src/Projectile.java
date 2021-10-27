@@ -1,4 +1,3 @@
-
 public class Projectile extends Sprite {
 
 	public Projectile() {
