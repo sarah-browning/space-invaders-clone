@@ -11,11 +11,12 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 6890192808572845938L;
 	
 	//Memory Storage
-	private Alien myAlien;
+	private Alien[] myAliens;
 	private Starship myStarship;
 	
 	//Labels to Display Graphics
-	private JLabel AlienLabel, BackgroundLabel, StarshipLabel;
+	private JLabel[] AlienLabels;
+	private JLabel BackgroundLabel, StarshipLabel;
 	
 	//Container to hold graphics
 	private Container content;
@@ -41,16 +42,31 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener {
 		StarshipLabel.setSize( myStarship.getWidth(), myStarship.getHeight() );
 		StarshipLabel.setLocation(myStarship.getX(), myStarship.getY());
 		
-		myAlien = new Alien();
-		myAlien.setX(80);
-		myAlien.setY(50);
-		AlienLabel = new JLabel( new ImageIcon( getClass().getResource( myAlien.getFilename() ) ));
-		AlienLabel.setSize( myAlien.getWidth(), myAlien.getHeight() );
-		AlienLabel.setLocation(myAlien.getX(), myAlien.getY());
+		
+		//Create new array of Aliens
+		myAliens = new Alien[33];
+		AlienLabels = new JLabel[33];
+		
+		for (int i = 0; i < myAliens.length; i++) {
+				
+			myAliens[i] = new Alien();
+			myAliens[i].setX(80);
+			myAliens[i].setY(50);
+			if ( i >= 1 ) {
+				myAliens[i].setX(myAliens[i-1].getX() + 55);
+			}
+			
+			
+			AlienLabels[i] = new JLabel( new ImageIcon( getClass().getResource( myAliens[i].getFilename() ) ));
+			AlienLabels[i].setSize( myAliens[i].getWidth(), myAliens[i].getHeight() );
+			AlienLabels[i].setLocation(myAliens[i].getX(), myAliens[i].getY());
+			add(AlienLabels[i]);
+			System.out.println("X is " + myAliens[i].getX() + " and Y is " + myAliens[i].getY());
+		}
 
 		//Add components to window
 		add(StarshipLabel);
-		add(AlienLabel);
+		
 		add(BackgroundLabel);
 		content.addKeyListener(this);
 		content.setFocusable(true);
@@ -81,11 +97,11 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener {
 		//move left
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			sx -= GameProperties.CHARACTER_STEP;
-			if (sx + myStarship.getWidth() < 0) sx = GameProperties.SCREEN_WIDTH;
+			if (sx <= 20) sx = 20;
 		//move right
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			sx += GameProperties.CHARACTER_STEP;
-			if (sx > GameProperties.SCREEN_WIDTH) sx = -1 * myStarship.getWidth();
+			if (sx >= 795) sx = 795;
 		}
 		
 		//set Starship X,Y

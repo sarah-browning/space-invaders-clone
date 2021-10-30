@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Alien extends Sprite {
 	
 	//declarations
@@ -19,4 +21,8 @@ public class Alien extends Sprite {
 		this.pointValue = 20;
 	}
 	
+	public Alien(int x, int y, String filename) {
+		super();
+		this.pointValue = 20;
+	}
 }
