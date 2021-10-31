@@ -17,12 +17,7 @@ public class Alien extends Sprite {
 
 	//Constructors
 	public Alien() {
-		super(50, 50,"images/alien1.png");
-		this.pointValue = 20;
-	}
-	
-	public Alien(int x, int y, String filename) {
-		super();
-		this.pointValue = 20;
+		super(50, 50,"images/alien2.png");
+		this.pointValue = 50;
 	}
 }

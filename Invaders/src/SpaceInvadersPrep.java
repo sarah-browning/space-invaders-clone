@@ -37,31 +37,72 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener {
 		//Create new Player Starship
 		myStarship = new Starship();
 		myStarship.setX(400);
-		myStarship.setY(500);
+		myStarship.setY(525);
 		StarshipLabel = new JLabel( new ImageIcon( getClass().getResource( myStarship.getFilename() ) ));
 		StarshipLabel.setSize( myStarship.getWidth(), myStarship.getHeight() );
 		StarshipLabel.setLocation(myStarship.getX(), myStarship.getY());
 		
 		
 		//Create new array of Aliens
-		myAliens = new Alien[33];
-		AlienLabels = new JLabel[33];
-		
-		for (int i = 0; i < myAliens.length; i++) {
+		myAliens = new Alien[55];
+		AlienLabels = new JLabel[55];
 				
+		for (int i = 0; i < myAliens.length; i++) {
 			myAliens[i] = new Alien();
 			myAliens[i].setX(80);
 			myAliens[i].setY(50);
-			if ( i >= 1 ) {
+			
+			//set x,y coordinates, filenames, and point values
+			if ( i >= 1 && i <= 10  ) {
 				myAliens[i].setX(myAliens[i-1].getX() + 55);
+				myAliens[i].setY(50);
+			} else if ( i == 11) {
+				myAliens[i].setX(80);
+				myAliens[i].setY(100);
+				myAliens[i].setFilename("images/alien1.png");
+				myAliens[i].setPointValue(40);
+			} else if ( i >= 12 && i <= 21  ) {
+				myAliens[i].setX(myAliens[i-1].getX() + 55);
+				myAliens[i].setY(100);
+				myAliens[i].setFilename("images/alien1.png");
+				myAliens[i].setPointValue(40);
+			} else if ( i == 22 ) {
+				myAliens[i].setX(80);
+				myAliens[i].setY(150);
+				myAliens[i].setFilename("images/alien1.png");
+				myAliens[i].setPointValue(40);
+			} else if ( i >= 23 && i <= 32  ) {
+				myAliens[i].setX(myAliens[i-1].getX() + 55);
+				myAliens[i].setY(150);
+				myAliens[i].setFilename("images/alien1.png");
+				myAliens[i].setPointValue(40);
+			} else if ( i == 33 ) {
+				myAliens[i].setX(80);
+				myAliens[i].setY(200);
+				myAliens[i].setFilename("images/alien3.png");
+				myAliens[i].setPointValue(20);
+			} else if ( i >= 34 && i <= 43  ) {
+				myAliens[i].setX(myAliens[i-1].getX() + 55);
+				myAliens[i].setY(200);
+				myAliens[i].setFilename("images/alien3.png");
+				myAliens[i].setPointValue(20);
+			} else if ( i == 44 ) {
+				myAliens[i].setX(80);
+				myAliens[i].setY(250);
+				myAliens[i].setFilename("images/alien3.png");
+				myAliens[i].setPointValue(20);
+			} else if ( i >= 45 && i <= 55  ) {
+				myAliens[i].setX(myAliens[i-1].getX() + 55);
+				myAliens[i].setY(250);
+				myAliens[i].setFilename("images/alien3.png");
+				myAliens[i].setPointValue(20);
 			}
-			
-			
+
 			AlienLabels[i] = new JLabel( new ImageIcon( getClass().getResource( myAliens[i].getFilename() ) ));
 			AlienLabels[i].setSize( myAliens[i].getWidth(), myAliens[i].getHeight() );
 			AlienLabels[i].setLocation(myAliens[i].getX(), myAliens[i].getY());
 			add(AlienLabels[i]);
-			System.out.println("X is " + myAliens[i].getX() + " and Y is " + myAliens[i].getY());
+			//System.out.println("X is " + myAliens[i].getX() + " and Y is " + myAliens[i].getY());
 		}
 
 		//Add components to window
@@ -109,7 +150,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener {
 		myStarship.setY(sy);
 		//set Starship Label location
 		StarshipLabel.setLocation(myStarship.getX(), myStarship.getY());
-		myStarship.Display();
+		//myStarship.Display();
 	}
 
 	@Override
