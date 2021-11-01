@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Alien extends Sprite {
 	
 	//declarations
@@ -17,7 +15,9 @@ public class Alien extends Sprite {
 
 	//Constructors
 	public Alien() {
-		super(50, 50,"images/alien2.png");
+		super(50, 50,"images/alien1.png");
 		this.pointValue = 50;
 	}
+	
+	//Other functions
 }

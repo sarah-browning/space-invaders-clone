@@ -13,6 +13,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener {
 	//Memory Storage
 	private Alien[] myAliens;
 	private Starship myStarship;
+	private int i;
 	
 	//Labels to Display Graphics
 	private JLabel[] AlienLabels;
@@ -42,39 +43,38 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener {
 		StarshipLabel.setSize( myStarship.getWidth(), myStarship.getHeight() );
 		StarshipLabel.setLocation(myStarship.getX(), myStarship.getY());
 		
-		
-		//Create new array of Aliens
+		//Declare new arrays of Aliens/Labels
 		myAliens = new Alien[55];
 		AlienLabels = new JLabel[55];
-				
-		for (int i = 0; i < myAliens.length; i++) {
+		
+		//Initialize Aliens/Labels
+		for (i = 0; i < myAliens.length; i++) {
 			myAliens[i] = new Alien();
 			myAliens[i].setX(80);
 			myAliens[i].setY(50);
 			
-			//set x,y coordinates, filenames, and point values
 			if ( i >= 1 && i <= 10  ) {
 				myAliens[i].setX(myAliens[i-1].getX() + 55);
 				myAliens[i].setY(50);
 			} else if ( i == 11) {
 				myAliens[i].setX(80);
 				myAliens[i].setY(100);
-				myAliens[i].setFilename("images/alien1.png");
+				myAliens[i].setFilename("images/alien2.png");
 				myAliens[i].setPointValue(40);
 			} else if ( i >= 12 && i <= 21  ) {
 				myAliens[i].setX(myAliens[i-1].getX() + 55);
 				myAliens[i].setY(100);
-				myAliens[i].setFilename("images/alien1.png");
+				myAliens[i].setFilename("images/alien2.png");
 				myAliens[i].setPointValue(40);
 			} else if ( i == 22 ) {
 				myAliens[i].setX(80);
 				myAliens[i].setY(150);
-				myAliens[i].setFilename("images/alien1.png");
+				myAliens[i].setFilename("images/alien2.png");
 				myAliens[i].setPointValue(40);
 			} else if ( i >= 23 && i <= 32  ) {
 				myAliens[i].setX(myAliens[i-1].getX() + 55);
 				myAliens[i].setY(150);
-				myAliens[i].setFilename("images/alien1.png");
+				myAliens[i].setFilename("images/alien2.png");
 				myAliens[i].setPointValue(40);
 			} else if ( i == 33 ) {
 				myAliens[i].setX(80);
@@ -102,7 +102,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener {
 			AlienLabels[i].setSize( myAliens[i].getWidth(), myAliens[i].getHeight() );
 			AlienLabels[i].setLocation(myAliens[i].getX(), myAliens[i].getY());
 			add(AlienLabels[i]);
-			//System.out.println("X is " + myAliens[i].getX() + " and Y is " + myAliens[i].getY());
+			//System.out.println("X is " + myAliens[i].getX() + " and Y is " + myAliens[i].getY() + " and point value is " + myAliens[i].pointValue);
 		}
 
 		//Add components to window
