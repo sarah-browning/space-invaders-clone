@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 public class Alien extends Sprite {
 	
 	//Attributes
@@ -38,5 +40,12 @@ public class Alien extends Sprite {
 		this.dying = false;
 	}
 	
-	//Other functions
+	//Other Functions
+	public void tick() {
+		
+	}
+	
+	public void render(Graphics g) {
+		
+	}
 }
