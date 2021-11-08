@@ -4,22 +4,30 @@ import java.awt.image.BufferedImage;
 public class Starship extends Sprite {
 	
 	//Attributes
-	protected Boolean dying;
+	private int speed = 0;
+	private Boolean dying;
 	private BufferedImage starship;
 	
 	//Getters
+	public int getSpeed() {
+		return speed;
+	}
 	public Boolean getDying() {
 		return dying;
 	}
 	
 	//Setters
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+	
 	public void setDying(Boolean dying) {
 		this.dying = dying;
 	}
 	
 	//Constructor
 	public Starship(int x, int y, SpaceInvadersPrep game) {
-		super(70, 60);
+		super(400, 550, 70, 60);
 		this.dying = false;
 		ImageLoader loader = new ImageLoader();
 		starship = loader.loadImage("/images/starship.png");
@@ -31,6 +39,6 @@ public class Starship extends Sprite {
 	
 	public void render(Graphics g) {
 
-		g.drawImage(starship, 400, 550, null);
+		g.drawImage(starship, this.x, this.y, null);
 	}
 }

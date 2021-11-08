@@ -3,7 +3,7 @@ import java.awt.Graphics;
 public class Projectile extends Sprite {
 	
 	//Attributes
-	protected Boolean moving;
+	private Boolean moving;
 	
 	//Getters
 	public Boolean getMoving() {

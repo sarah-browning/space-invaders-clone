@@ -3,8 +3,8 @@ import java.awt.Graphics;
 public class Alien extends Sprite {
 	
 	//Attributes
-	protected int pointValue;
-	protected Boolean moving, dying;
+	private int pointValue;
+	private Boolean moving, dying;
 	
 	//Getters
 	public int getPointValue() {
