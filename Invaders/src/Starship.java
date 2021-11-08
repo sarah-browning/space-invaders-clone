@@ -34,7 +34,11 @@ public class Starship extends Sprite {
 	}
 
 	public void tick() {
+		x += speed;
 		
+		//keep starship in bounds
+		if (x <= 40) x = 40;
+		if (x >= 790 ) x = 790;
 	}
 	
 	public void render(Graphics g) {

@@ -27,6 +27,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 
 	//Game Initialization
 	public void init() {
+		requestFocus();
 		
 		//Load Images
 		ImageLoader loader = new ImageLoader();
@@ -142,19 +143,21 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 		//if left arrow key is pressed
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			//move starship left
-			starship.setX(sx - GameProperties.CHAR_STEP);
-//			if (sx <= 40) sx = 40;
+			starship.setSpeed(- GameProperties.CHAR_STEP);
 		//else if right arrow key is pressed
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			//move starship right
-			starship.setX(sx + GameProperties.CHAR_STEP);
-//			if (sx >= 790) sx = 790;
+			starship.setSpeed(+ GameProperties.CHAR_STEP);
 		} 	
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			starship.setSpeed(0);
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
+			starship.setSpeed(0);
+		}
 		
 	}
 	
