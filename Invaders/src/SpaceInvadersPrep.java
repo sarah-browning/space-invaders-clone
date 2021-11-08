@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
@@ -101,7 +103,21 @@ public class SpaceInvadersPrep extends JFrame implements Runnable {
 	}
 	//everything in the game that renders
 	private void render() {
+		//create a strategy for multi-buffering
+		BufferStrategy bs = this.getBufferStrategy();
 		
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
+
+		//draw the buffered graphics
+		Graphics g = bs.getDrawGraphics();
+		
+		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+
+		g.dispose();
+		bs.show();
 	}
 	
 	//Main
