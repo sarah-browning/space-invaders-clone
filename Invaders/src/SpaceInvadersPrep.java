@@ -153,7 +153,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 			starship.setSpeed(+ GameProperties.CHAR_STEP);
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && starship.getShooting() == false) {
 			starship.setShooting(true);
-			blist.addBullet(new Bullet(starship.getX(), starship.getY() - 45, this));
+			blist.addBullet(new Bullet(starship.getX() + 6, starship.getY() - 35   , this));
 		}
 	}
 
