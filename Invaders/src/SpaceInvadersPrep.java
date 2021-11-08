@@ -1,10 +1,12 @@
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-public class SpaceInvadersPrep extends JFrame implements Runnable {
+public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 	
 	//Attributes
 	private static final long serialVersionUID = 9121643710941167328L;
@@ -29,7 +31,11 @@ public class SpaceInvadersPrep extends JFrame implements Runnable {
 		//Load Images
 		ImageLoader loader = new ImageLoader();
 			background = loader.loadImage("/images/starbkg.jpg");	
+		
+			addKeyListener(this);
+		
 		starship = new Starship( 70, 60, this);
+		
 	}
 	
 	//Start the thread if not already running
@@ -120,6 +126,36 @@ public class SpaceInvadersPrep extends JFrame implements Runnable {
 		SpaceInvadersPrep game = new SpaceInvadersPrep();
 		game.setVisible(true);
 		game.start();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int sx = starship.getX();
+//		int sy = starship.getY();
+		
+		//if left arrow key is pressed
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			//move starship left
+			starship.setX(sx - GameProperties.CHAR_STEP);
+//			if (sx <= 40) sx = 40;
+		//else if right arrow key is pressed
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			//move starship right
+			starship.setX(sx + GameProperties.CHAR_STEP);
+//			if (sx >= 790) sx = 790;
+		} 	
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
