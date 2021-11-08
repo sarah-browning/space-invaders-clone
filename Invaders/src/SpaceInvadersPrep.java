@@ -14,6 +14,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 	private Thread t;
 	private BufferedImage background;
 	private Starship starship;
+	private GameController blist;
 	
 	
 	//Prepare GUI
@@ -29,13 +30,14 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 	public void init() {
 		requestFocus();
 		
-		//Load Images
+		//Load Background
 		ImageLoader loader = new ImageLoader();
-			background = loader.loadImage("/images/starbkg.jpg");	
+		background = loader.loadImage("/images/starbkg.jpg");
 		
-			addKeyListener(this);
-		
+		//Load Components
+		addKeyListener(this);
 		starship = new Starship( 70, 60, this);
+		blist = new GameController(this);
 		
 	}
 	
@@ -74,6 +76,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 		int updates = 0;
 		int frames = 0;
 		long timer = System.currentTimeMillis();
+		
 		//Game Loop - Tracks time and latency to render and update game at a constant 60fps
 		while (running) {
 			long now = System.nanoTime();
@@ -97,12 +100,13 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 		stop();
 	}
 	
-	//everything in the game that updates
+	//Update Method
 	private void tick() {
 		starship.tick();
+		blist.tick();
 	}
 	
-	//everything in the game that renders
+	//Render Method
 	private void render() {
 		//create a strategy for multi-buffering
 		BufferStrategy bs = this.getBufferStrategy();
@@ -117,6 +121,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 		
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 		starship.render(g);
+		blist.render(g);
 
 		g.dispose();
 		bs.show();
@@ -137,8 +142,6 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int sx = starship.getX();
-//		int sy = starship.getY();
 		
 		//if left arrow key is pressed
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -148,7 +151,9 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			//move starship right
 			starship.setSpeed(+ GameProperties.CHAR_STEP);
-		} 	
+		} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			blist.addBullet(new Bullet(starship.getX(), starship.getY() - 45, this));
+		}
 	}
 
 	@Override
