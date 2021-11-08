@@ -5,7 +5,7 @@ public class Starship extends Sprite {
 	
 	//Attributes
 	private int speed = 0;
-	private Boolean dying;
+	private Boolean dying, shooting;
 	private BufferedImage starship;
 	
 	//Getters
@@ -15,20 +15,26 @@ public class Starship extends Sprite {
 	public Boolean getDying() {
 		return dying;
 	}
+	public Boolean getShooting() {
+		return shooting;
+	}
 	
 	//Setters
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-	
 	public void setDying(Boolean dying) {
 		this.dying = dying;
+	}
+	public void setShooting(Boolean shooting) {
+		this.shooting = shooting;
 	}
 	
 	//Constructor
 	public Starship(int x, int y, SpaceInvadersPrep game) {
 		super(400, 550, 70, 60);
 		this.dying = false;
+		this.shooting = false;
 		ImageLoader loader = new ImageLoader();
 		starship = loader.loadImage("/images/starship.png");
 	}

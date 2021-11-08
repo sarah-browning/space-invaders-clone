@@ -4,7 +4,7 @@ public class Alien extends Sprite {
 	
 	//Attributes
 	private int pointValue;
-	private Boolean moving, dying;
+	private Boolean shooting, dying;
 	
 	//Getters
 	public int getPointValue() {
@@ -12,7 +12,7 @@ public class Alien extends Sprite {
 	}
 
 	public Boolean getMoving() {
-		return moving;
+		return shooting;
 	}
 	
 	public Boolean getDying() {
@@ -25,7 +25,7 @@ public class Alien extends Sprite {
 	}
 	
 	public void setMoving(Boolean moving) {
-		this.moving = moving;
+		this.shooting = moving;
 	}	
 	
 	public void setDying(Boolean dying) {
@@ -36,7 +36,7 @@ public class Alien extends Sprite {
 	public Alien() {
 		super(50, 50, 50, 80);
 		this.pointValue = 50;
-		this.moving = true;
+		this.shooting = false;
 		this.dying = false;
 	}
 	

@@ -144,24 +144,27 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 	public void keyPressed(KeyEvent e) {
 		
 		//if left arrow key is pressed
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 			//move starship left
 			starship.setSpeed(- GameProperties.CHAR_STEP);
 		//else if right arrow key is pressed
-		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			//move starship right
 			starship.setSpeed(+ GameProperties.CHAR_STEP);
-		} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && starship.getShooting() == false) {
+			starship.setShooting(true);
 			blist.addBullet(new Bullet(starship.getX(), starship.getY() - 45, this));
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 			starship.setSpeed(0);
-		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D ) {
 			starship.setSpeed(0);
+		} else if (e.getKeyCode() == KeyEvent.VK_SPACE ) {
+			starship.setShooting(false);
 		}
 		
 	}
