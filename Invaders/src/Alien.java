@@ -1,22 +1,41 @@
 public class Alien extends Sprite {
 	
-	//declarations
+	//Attributes
 	protected int pointValue;
+	protected Boolean moving, dying;
 	
-	//getters
+	//Getters
 	public int getPointValue() {
 		return pointValue;
 	}
+
+	public Boolean getMoving() {
+		return moving;
+	}
 	
-	//setters
+	public Boolean getDying() {
+		return dying;
+	}
+	
+	//Setters
 	public void setPointValue(int pointValue) {
 		this.pointValue = pointValue;
+	}
+	
+	public void setMoving(Boolean moving) {
+		this.moving = moving;
+	}	
+	
+	public void setDying(Boolean dying) {
+		this.dying = dying;
 	}
 
 	//Constructors
 	public Alien() {
-		super(50, 50,"images/alien1.png");
+		super(50, 50, 50, 80);
 		this.pointValue = 50;
+		this.moving = true;
+		this.dying = false;
 	}
 	
 	//Other functions
