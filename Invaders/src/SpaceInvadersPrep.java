@@ -41,7 +41,44 @@ public class SpaceInvadersPrep extends JFrame implements Runnable {
 	}
 	
 	@Override
+	//Runs the game
 	public void run() {
+		long initialTime = System.nanoTime();
+		final double numTicks = 60.0;
+		double nanoseconds = 1000000000 / numTicks;
+		double delta = 0;
+		int updates = 0;
+		int frames = 0;
+		long timer = System.currentTimeMillis();
+		//Game Loop - Tracks time and latency to render and update game at a constant 60fps
+		while (running) {
+			long now = System.nanoTime();
+			delta += (now - initialTime) / nanoseconds;
+			initialTime = now;
+			if ( delta >= 1 ) {
+				tick();
+				updates++;
+				delta--;
+			}
+			render();
+			frames++;
+			
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer+= 1000;
+				System.out.println(updates + " Ticks, FPS " + frames);
+				updates = 0;
+				frames = 0;
+			}
+		}
+		stop();
+	}
+	
+	//everything in the game that updates
+	private void tick() {
+		
+	}
+	//everything in the game that renders
+	private void render() {
 		
 	}
 	
