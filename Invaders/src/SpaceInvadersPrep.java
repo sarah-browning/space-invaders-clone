@@ -10,7 +10,8 @@ public class SpaceInvadersPrep extends JFrame implements Runnable {
 	private static final long serialVersionUID = 9121643710941167328L;
 	private Boolean running = false;
 	private Thread t;
-	private BufferedImage background, alien1, alien2, alien3, starship, pBullet, aBullet, alienShip;
+	private BufferedImage background;
+	private Starship starship;
 	
 	
 	//Prepare GUI
@@ -25,18 +26,10 @@ public class SpaceInvadersPrep extends JFrame implements Runnable {
 	//Game Initialization
 	public void init() {
 		
-		//Load images
+		//Load Images
 		ImageLoader loader = new ImageLoader();
-			background = loader.loadImage("/images/starbkg.jpg");
-			alien1 = loader.loadImage("/images/alien1.png");
-			alien2 = loader.loadImage("/images/alien2.png");
-			alien3 = loader.loadImage("/images/alien3.png");
-			starship = loader.loadImage("/images/starship.png");
-			pBullet = loader.loadImage("/images/projectile1.png");
-			aBullet = loader.loadImage("/images/projectile2.png");
-			alienShip = loader.loadImage("/images/mothership.png");
-	
-		
+			background = loader.loadImage("/images/starbkg.jpg");	
+		starship = new Starship( 70, 60, this);
 	}
 	
 	//Start the thread if not already running
@@ -99,8 +92,9 @@ public class SpaceInvadersPrep extends JFrame implements Runnable {
 	
 	//everything in the game that updates
 	private void tick() {
-		
+		starship.tick();
 	}
+	
 	//everything in the game that renders
 	private void render() {
 		//create a strategy for multi-buffering
@@ -115,6 +109,7 @@ public class SpaceInvadersPrep extends JFrame implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+		starship.render(g);
 
 		g.dispose();
 		bs.show();
