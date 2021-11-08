@@ -77,7 +77,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 		int frames = 0;
 		long timer = System.currentTimeMillis();
 		
-		//Game Loop - Tracks time and latency to render and update game at a constant 60fps
+		//Game Loop - Tracks time and latency to render and update game at a constant 60 ticks per second
 		while (running) {
 			long now = System.nanoTime();
 			delta += (now - initialTime) / nanoseconds;

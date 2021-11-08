@@ -1,28 +1,30 @@
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class GameController {
 
+	//Attributes
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-	private ArrayList<Alien> aliens = new ArrayList<Alien>();
+	private LinkedList<Alien> aliens = new LinkedList<Alien>();
+	private Bullet TempBullet;
+	private Alien TempAlien;
+	private SpaceInvadersPrep game;
 	
-	Bullet TempBullet;
-	Alien TempAlien;
-	SpaceInvadersPrep game;
-	
+	//Constructor
 	public GameController(SpaceInvadersPrep game) {
 		this.game = game;
 		
-		for (int x = 0; x < 600 ; x += 55) {
-			addAlien(new Alien(x, 80, 50, 50, "/images/alien1.png"));
-//			System.out.println("X is " + x);
-			addAlien(new Alien (x, 130, 50, 50, "/images/alien2.png"));
-			addAlien(new Alien (x, 180, 50, 50, "/images/alien2.png"));
-			addAlien(new Alien (x, 230, 50, 50, "/images/alien3.png"));
-			addAlien(new Alien (x, 280, 50, 50, "/images/alien3.png"));
+		for (int x = 40; x < 600 ; x += 55) {
+			addAlien(new Alien(x, 80, 50, 50, 50, "/images/alien1.png"));
+			addAlien(new Alien (x, 130, 50, 50, 40, "/images/alien2.png"));
+			addAlien(new Alien (x, 180, 50, 50, 40, "/images/alien2.png"));
+			addAlien(new Alien (x, 230, 50, 50, 20, "/images/alien3.png"));
+			addAlien(new Alien (x, 280, 50, 50, 20, "/images/alien3.png"));
 		}
 	}
 	
+	//Other Functions	
 	public void tick() {
 		for (int i = 0; i < bullets.size(); i++) {
 			TempBullet = bullets.get(i);
@@ -36,6 +38,13 @@ public class GameController {
 		
 		for(int i = 0; i < aliens.size(); i++) {
 			TempAlien = aliens.get(i);
+			
+			if (aliens.getLast().getX() > (GameProperties.SCREEN_WIDTH - 100) ) {
+				TempAlien.setSpeed(-TempAlien.speed);
+			} else if (aliens.getFirst().getX() < (GameProperties.SCREEN_WIDTH - 100)) {
+				TempAlien.setSpeed(+TempAlien.speed);
+			}
+			
 			TempAlien.tick();
 		}
 	}
@@ -49,7 +58,6 @@ public class GameController {
 		for (int i = 0; i < aliens.size(); i++) {
 			TempAlien = aliens.get(i);
 			TempAlien.render(g);
-//			System.out.println("Temp Alien #" + i + " x: " + TempAlien.getX() + " y: " + TempAlien.getY());
 		}
 	}
 	

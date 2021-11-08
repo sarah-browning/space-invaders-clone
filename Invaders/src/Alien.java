@@ -5,6 +5,7 @@ public class Alien extends Sprite {
 	
 	//Attributes
 	private int pointValue;
+	protected int speed;
 	private Boolean shooting, dying;
 	private BufferedImage alien;
 	
@@ -13,10 +14,12 @@ public class Alien extends Sprite {
 		return pointValue;
 	}
 
+	public int getSpeed() {
+		return speed;
+	}
 	public Boolean getMoving() {
 		return shooting;
 	}
-	
 	public Boolean getDying() {
 		return dying;
 	}
@@ -25,19 +28,21 @@ public class Alien extends Sprite {
 	public void setPointValue(int pointValue) {
 		this.pointValue = pointValue;
 	}
-	
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
 	public void setMoving(Boolean shooting) {
 		this.shooting = shooting;
-	}	
-	
+	}
 	public void setDying(Boolean dying) {
 		this.dying = dying;
 	}
 
 	//Constructors
-	public Alien(int x, int y, int width, int height, String filename) {
+	public Alien(int x, int y, int width, int height, int pointValue, String filename) {
 		super(x, y, width, height);
-		this.pointValue = 50;
+		this.pointValue = pointValue;
+		this.speed = 1;
 		this.shooting = false;
 		this.dying = false;
 		ImageLoader loader = new ImageLoader();
@@ -46,10 +51,8 @@ public class Alien extends Sprite {
 	
 	//Other Functions
 	public void tick() {
-		x += 1;
+		x += speed;
 		
-//		if (x >= 790 ) x -= 1;
-//		if (x <= 40) x += 1;
 		
 	}
 	
