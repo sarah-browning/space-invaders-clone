@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class GameController {
 
-	private ArrayList<Bullet> b = new ArrayList<Bullet>();
+	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	
 	Bullet TempBullet;
 	SpaceInvadersPrep game;
@@ -13,8 +13,8 @@ public class GameController {
 	}
 	
 	public void tick() {
-		for (int i = 0; i < b.size(); i++) {
-			TempBullet = b.get(i);
+		for (int i = 0; i < bullets.size(); i++) {
+			TempBullet = bullets.get(i);
 			
 			if (TempBullet.getY() < 30) {
 				removeBullet(TempBullet);
@@ -25,19 +25,17 @@ public class GameController {
 	}
 	
 	public void render(Graphics g) {
-		for (int i = 0; i < b.size(); i++) {
-			TempBullet = b.get(i);
-			
+		for (int i = 0; i < bullets.size(); i++) {
+			TempBullet = bullets.get(i);
 			TempBullet.render(g);
 		}
 	}
 	
 	public void addBullet(Bullet bullet) {
-		b.add(bullet);
-		
+		bullets.add(bullet);
 	}
 	
 	public void removeBullet(Bullet bullet) {
-		b.remove(bullet);
+		bullets.remove(bullet);
 	}
 }

@@ -4,30 +4,28 @@ import java.awt.image.BufferedImage;
 public class Bullet extends Sprite {
 	
 	//Attributes
-	private Boolean moving;
 	BufferedImage bullet;
 	
 	//Getters
-	public Boolean getMoving() {
-		return moving;
+	public BufferedImage getBullet() {
+		return bullet;
 	}
 	
 	//Setters
-	public void setMoving(Boolean moving) {
-		this.moving = moving;
+	public void setBullet(BufferedImage bullet) {
+		this.bullet = bullet;
 	}
 	
 	//Constructor
 	public Bullet(int x, int y, SpaceInvadersPrep game) {
-		super(x, y, 65, 60);
-		this.moving = true;
+		super(x, y, 55, 51);
 		ImageLoader loader = new ImageLoader();
 		bullet = loader.loadImage("/images/bullet.png");
 	}
 
 	//Other Functions
 	public void tick() {
-		y -= 10;
+		y -= GameProperties.CHAR_STEP;
 	}
 	
 	public void render(Graphics g) {
