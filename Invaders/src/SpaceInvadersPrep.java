@@ -1,142 +1,143 @@
-import java.awt.Color;
-import java.awt.Container;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
-
-	private static final long serialVersionUID = 6890192808572845938L;
 	
-	//Memory Storage
-	private Alien[] myAliens;
-	private Starship myStarship;
+	//Attributes
+	private static final long serialVersionUID = 9121643710941167328L;
+	private Boolean running = false;
 	private Thread t;
-	
-	//Labels to Display Graphics
-	private JLabel[] AlienLabels;
-	private JLabel BackgroundLabel, StarshipLabel;
-	
-	//Container to hold graphics
-	private Container content;
-	
-	//
+	private BufferedImage background;
+	private Starship starship;
+	private GameController alienList, bulletList;
 	
 	
-	//GUI Setup
+	//Prepare GUI
 	public SpaceInvadersPrep() {
 		super("Space Invaders");
 		setSize(GameProperties.SCREEN_WIDTH, GameProperties.SCREEN_HEIGHT);
 		setResizable(false);
-		
-		content = getContentPane();
-		content.setBackground(Color.black);
 		setLayout(null);
-		
-		BackgroundLabel = new JLabel( new ImageIcon("./images/background.jpg") );
-		BackgroundLabel.setSize(GameProperties.SCREEN_WIDTH, GameProperties.SCREEN_HEIGHT);		
-	
-		//Create new Player Starship
-		myStarship = new Starship();
-		myStarship.setX(400);
-		myStarship.setY(525);
-		StarshipLabel = new JLabel( new ImageIcon( getClass().getResource( myStarship.getFilename() ) ));
-		StarshipLabel.setSize( myStarship.getWidth(), myStarship.getHeight() );
-		StarshipLabel.setLocation(myStarship.getX(), myStarship.getY());
-		
-		//Declare new arrays of Aliens/Labels
-		myAliens = new Alien[55];
-		AlienLabels = new JLabel[55];
-
-		//Initialize Aliens/Labels
-				for (int i = 0; i < myAliens.length; i++) {
-					myAliens[i] = new Alien();
-					myAliens[i].moving = true;
-					
-					if ( i >= 1 && i <= 10  ) {
-						myAliens[i].setX(myAliens[i-1].getX() + 55);
-						myAliens[i].setY(50);
-					} else if ( i == 11) {
-						myAliens[i].setX(80);
-						myAliens[i].setY(100);
-						myAliens[i].setFilename("images/alien2.png");
-						myAliens[i].setPointValue(40);
-					} else if ( i >= 12 && i <= 21  ) {
-						myAliens[i].setX(myAliens[i-1].getX() + 55);
-						myAliens[i].setY(100);
-						myAliens[i].setFilename("images/alien2.png");
-						myAliens[i].setPointValue(40);
-					} else if ( i == 22 ) {
-						myAliens[i].setX(80);
-						myAliens[i].setY(150);
-						myAliens[i].setFilename("images/alien2.png");
-						myAliens[i].setPointValue(40);
-					} else if ( i >= 23 && i <= 32  ) {
-						myAliens[i].setX(myAliens[i-1].getX() + 55);
-						myAliens[i].setY(150);
-						myAliens[i].setFilename("images/alien2.png");
-						myAliens[i].setPointValue(40);
-					} else if ( i == 33 ) {
-						myAliens[i].setX(80);
-						myAliens[i].setY(200);
-						myAliens[i].setFilename("images/alien3.png");
-						myAliens[i].setPointValue(20);
-					} else if ( i >= 34 && i <= 43  ) {
-						myAliens[i].setX(myAliens[i-1].getX() + 55);
-						myAliens[i].setY(200);
-						myAliens[i].setFilename("images/alien3.png");
-						myAliens[i].setPointValue(20);
-					} else if ( i == 44 ) {
-						myAliens[i].setX(80);
-						myAliens[i].setY(250);
-						myAliens[i].setFilename("images/alien3.png");
-						myAliens[i].setPointValue(20);
-					} else if ( i >= 45 && i <= 55  ) {
-						myAliens[i].setX(myAliens[i-1].getX() + 55);
-						myAliens[i].setY(250);
-						myAliens[i].setFilename("images/alien3.png");
-						myAliens[i].setPointValue(20);
-					}
-
-					AlienLabels[i] = new JLabel( new ImageIcon( getClass().getResource( myAliens[i].getFilename() ) ));
-					AlienLabels[i].setSize( myAliens[i].getWidth(), myAliens[i].getHeight() );
-					AlienLabels[i].setLocation(myAliens[i].getX(), myAliens[i].getY());
-					add(AlienLabels[i]);
-					//System.out.println("X is " + myAliens[i].getX() + " and Y is " + myAliens[i].getY() + " and point value is " + myAliens[i].pointValue);
-				}
-		
-		//Add components to window
-		add(StarshipLabel);
-		add(BackgroundLabel);
-		content.addKeyListener(this);
-		content.setFocusable(true);
-		
-		//Exit game on window close
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	//Game Initialization
+	public void init() {
+		requestFocus();
+		
+		//Load Background
+		ImageLoader loader = new ImageLoader();
+		background = loader.loadImage("/images/starbkg.jpg");
+		
+		//Load Components
+		addKeyListener(this);
+		starship = new Starship( 70, 60, this);
+		bulletList = new GameController(this);
+//		alienList = new GameController(this);
+		
+		//Initiate alien movement
+		
+		
+	}
+	
+	//Start the thread if not already running
+	private synchronized void start() {
+		if (running)
+			return;
+		
+		running = true;
+		t = new Thread(this);
+		t.start();
+	}
+	
+	//Stop the thread from running and exit the game
+	private synchronized void stop() {
+		if (!running) 
+			return;
+		
+		running = false;
+		try {
+			t.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.exit(1);
+	}
+	
+	@Override
+	//Run the game
+	public void run() {
+		init();
+		long initialTime = System.nanoTime();
+		final double numTicks = 60.0;
+		double nanoseconds = 1000000000 / numTicks;
+		double delta = 0;
+		int updates = 0;
+		int frames = 0;
+		long timer = System.currentTimeMillis();
+		
+		//Game Loop - Tracks time and latency to render and update game at a constant 60 ticks per second
+		while (running) {
+			long now = System.nanoTime();
+			delta += (now - initialTime) / nanoseconds;
+			initialTime = now;
+			if ( delta >= 1 ) {
+				update();
+				updates++;
+				delta--;
+			}
+			render();
+			frames++;
+			
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer+= 1000;
+				System.out.println(updates + " Ticks, FPS " + frames);
+				updates = 0;
+				frames = 0;
+			}
+		}
+		stop();
+	}
+	
+	//Update Method
+	private void update() {
+		starship.update();
+		bulletList.update();
+	}
+	
+	//Render Method
+	private void render() {
+		//create a strategy for multi-buffering
+		BufferStrategy bs = this.getBufferStrategy();
+		
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
+
+		//draw the buffered graphics
+		Graphics g = bs.getDrawGraphics();
+		
+		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+		starship.render(g);
+		bulletList.render(g);
+
+		g.dispose();
+		bs.show();
 	}
 	
 	//Main
 	public static void main( String[] args ) {
-		SpaceInvadersPrep myGame = new SpaceInvadersPrep();
-		myGame.setVisible(true);
-	}
-	
-	public void moveAliens() {
-		t = new Thread(this, "Alien Thread");
-		t.start();
-	}
-	
-	@Override
-	public void run() {
-//		while (moving) {
-//			
-//		}
+		SpaceInvadersPrep game = new SpaceInvadersPrep();
+		game.setVisible(true);
+		game.start();
 	}
 
-	//Key Listeners
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -145,37 +146,30 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int sx = myStarship.getX();
-		int sy = myStarship.getY();
 		
-		//move left
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			sx -= GameProperties.CHARACTER_STEP;
-			if (sx <= 20) sx = 20;
-		//move right
-		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			sx += GameProperties.CHARACTER_STEP;
-			if (sx >= 795) sx = 795;
-		}
-		
-		//set Starship X,Y
-		myStarship.setX(sx);
-		myStarship.setY(sy);
-		//set Starship Label location
-		StarshipLabel.setLocation(myStarship.getX(), myStarship.getY());
-		//myStarship.Display();
-		
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			//fire projectile at aliens
-			//Initialize projectile using spaceship x,y as starting point
-			//move in straight line up
-			//check for collision detection
+		//if left arrow key is pressed
+		if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+			//move starship left
+			starship.setSpeed(- GameProperties.CHAR_STEP);
+		//else if right arrow key is pressed
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+			//move starship right
+			starship.setSpeed(+ GameProperties.CHAR_STEP);
+		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && starship.getShooting() == false) {
+			starship.setShooting(true);
+			bulletList.addBullet(new Bullet(starship.getX() + 6, starship.getY() - 35   , this));
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+			starship.setSpeed(0);
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D ) {
+			starship.setSpeed(0);
+		} else if (e.getKeyCode() == KeyEvent.VK_SPACE ) {
+			starship.setShooting(false);
+		}
 		
 	}
 	
