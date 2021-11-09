@@ -24,7 +24,7 @@ public class Bullet extends Sprite {
 	}
 
 	//Other Functions
-	public void tick() {
+	public void update() {
 		y -= GameProperties.CHAR_STEP;
 	}
 	

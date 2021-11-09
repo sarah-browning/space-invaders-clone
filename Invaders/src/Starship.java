@@ -39,7 +39,7 @@ public class Starship extends Sprite {
 		starship = loader.loadImage("/images/starship.png");
 	}
 
-	public void tick() {
+	public void update() {
 		x += speed;
 		
 		//keep starship in bounds

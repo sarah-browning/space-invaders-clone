@@ -25,7 +25,7 @@ public class GameController {
 	}
 	
 	//Other Functions	
-	public void tick() {
+	public void update() {
 		for (int i = 0; i < bullets.size(); i++) {
 			TempBullet = bullets.get(i);
 			
@@ -33,19 +33,21 @@ public class GameController {
 				removeBullet(TempBullet);
 			}
 			
-			TempBullet.tick();
+			TempBullet.update();
 		}
 		
 		for(int i = 0; i < aliens.size(); i++) {
 			TempAlien = aliens.get(i);
 			
-			if (aliens.getLast().getX() > (GameProperties.SCREEN_WIDTH - 100) ) {
-				TempAlien.setSpeed(-TempAlien.speed);
-			} else if (aliens.getFirst().getX() < (GameProperties.SCREEN_WIDTH - 100)) {
-				TempAlien.setSpeed(+TempAlien.speed);
+			if (aliens.getLast().getX() >= (GameProperties.SCREEN_WIDTH - 100)) {
+				TempAlien.setSpeed(-1);
+			}
+
+			if (aliens.getFirst().getX() <= 50) {
+				TempAlien.setSpeed(+1);
 			}
 			
-			TempAlien.tick();
+			TempAlien.update();
 		}
 	}
 	

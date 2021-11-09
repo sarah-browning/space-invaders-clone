@@ -50,10 +50,8 @@ public class Alien extends Sprite {
 	}
 	
 	//Other Functions
-	public void tick() {
+	public void update() {
 		x += speed;
-		
-		
 	}
 	
 	public void render(Graphics g) {

@@ -14,7 +14,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 	private Thread t;
 	private BufferedImage background;
 	private Starship starship;
-	private GameController blist;
+	private GameController alienList, bulletList;
 	
 	
 	//Prepare GUI
@@ -37,7 +37,11 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 		//Load Components
 		addKeyListener(this);
 		starship = new Starship( 70, 60, this);
-		blist = new GameController(this);
+		bulletList = new GameController(this);
+//		alienList = new GameController(this);
+		
+		//Initiate alien movement
+		
 		
 	}
 	
@@ -83,7 +87,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 			delta += (now - initialTime) / nanoseconds;
 			initialTime = now;
 			if ( delta >= 1 ) {
-				tick();
+				update();
 				updates++;
 				delta--;
 			}
@@ -101,9 +105,9 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 	}
 	
 	//Update Method
-	private void tick() {
-		starship.tick();
-		blist.tick();
+	private void update() {
+		starship.update();
+		bulletList.update();
 	}
 	
 	//Render Method
@@ -121,7 +125,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 		
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 		starship.render(g);
-		blist.render(g);
+		bulletList.render(g);
 
 		g.dispose();
 		bs.show();
@@ -153,7 +157,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 			starship.setSpeed(+ GameProperties.CHAR_STEP);
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && starship.getShooting() == false) {
 			starship.setShooting(true);
-			blist.addBullet(new Bullet(starship.getX() + 6, starship.getY() - 35   , this));
+			bulletList.addBullet(new Bullet(starship.getX() + 6, starship.getY() - 35   , this));
 		}
 	}
 
