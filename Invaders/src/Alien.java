@@ -17,7 +17,7 @@ public class Alien extends Sprite {
 	public int getSpeed() {
 		return speed;
 	}
-	public Boolean getMoving() {
+	public Boolean getShooting() {
 		return shooting;
 	}
 	public Boolean getDying() {
@@ -31,7 +31,7 @@ public class Alien extends Sprite {
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-	public void setMoving(Boolean shooting) {
+	public void setShooting(Boolean shooting) {
 		this.shooting = shooting;
 	}
 	public void setDying(Boolean dying) {

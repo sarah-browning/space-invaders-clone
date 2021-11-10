@@ -1,11 +1,10 @@
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class GameController {
 
 	//Attributes
-	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+	private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
 	private LinkedList<Alien> aliens = new LinkedList<Alien>();
 	private Bullet TempBullet;
 	private Alien TempAlien;
@@ -19,7 +18,7 @@ public class GameController {
 	public int getBulletCount() {
 		return bulletCount;
 	}
-	public ArrayList<Bullet> getBullets() {
+	public LinkedList<Bullet> getBullets() {
 		return bullets;
 	}
 	public LinkedList<Alien> getAliens() {
@@ -39,7 +38,7 @@ public class GameController {
 	public void setBulletCount(int bulletCount) {
 		this.bulletCount = bulletCount;
 	}
-	public void setBullets(ArrayList<Bullet> bullets) {
+	public void setBullets(LinkedList<Bullet> bullets) {
 		this.bullets = bullets;
 	}
 	public void setAliens(LinkedList<Alien> aliens) {
@@ -56,13 +55,12 @@ public class GameController {
 	public GameController(SpaceInvaders game) {
 		this.setGame(game);
 		
-		
 		for (int x = 40; x < 600 ; x += 55) {
-			addAlien(new Alien(x, 80, 50, 50, 50, "/images/alien1.png"));
-			addAlien(new Alien (x, 130, 50, 50, 40, "/images/alien2.png"));
-			addAlien(new Alien (x, 180, 50, 50, 40, "/images/alien2.png"));
-			addAlien(new Alien (x, 230, 50, 50, 20, "/images/alien3.png"));
-			addAlien(new Alien (x, 280, 50, 50, 20, "/images/alien3.png"));
+			aliens.add(new Alien(x, 80, 50, 50, 50, "/images/alien1.png"));
+			aliens.add(new Alien (x, 130, 50, 50, 40, "/images/alien2.png"));
+			aliens.add(new Alien (x, 180, 50, 50, 40, "/images/alien2.png"));
+			aliens.add(new Alien (x, 230, 50, 50, 20, "/images/alien3.png"));
+			aliens.add(new Alien (x, 280, 50, 50, 20, "/images/alien3.png"));
 		}
 	}
 	
@@ -81,7 +79,8 @@ public class GameController {
 		
 		for(int i = 0; i < aliens.size(); i++) {
 			TempAlien = aliens.get(i);
-			if (aliens.getFirst().getX() <= 40) {
+			
+			if (aliens.getFirst().getX() < 40) {
 				TempAlien.setY(TempAlien.getY() + 10);
 				TempAlien.setSpeed(+1);
 				//TODO - Figure out how to stop first alien from dropping 10 pixels 

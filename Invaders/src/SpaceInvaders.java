@@ -3,8 +3,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.LinkedList;
 
 import javax.swing.JFrame;
 
@@ -17,7 +15,6 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 	private BufferedImage background;
 	private Starship starship;
 	private GameController controller;
-	private int bulletCount = 0;	
 	
 	//Prepare GUI
 	public SpaceInvaders() {
@@ -133,10 +130,8 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 	}
 	
 	//Collision Detection Method
-	public void checkCollision() {	
+	private void checkCollision() {	
 		//TODO - Add collision method
-		
-		//https://stackoverflow.com/questions/56169028/how-to-access-a-getter-from-an-object-of-a-linkedlist
 		
 		//if bullet intersects alien
 		//remove alien from linked list/ set visible false
