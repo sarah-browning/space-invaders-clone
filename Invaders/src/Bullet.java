@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 public class Bullet extends Sprite {
 	
 	//Attributes
-	BufferedImage bullet;
+	private BufferedImage bullet;
 	
 	//Getters
 	public BufferedImage getBullet() {
@@ -26,9 +26,11 @@ public class Bullet extends Sprite {
 	//Other Functions
 	public void update() {
 		y -= GameProperties.CHAR_STEP;
+		
 	}
 	
 	public void render(Graphics g) {
+		
 		g.drawImage(bullet, x, y, null);
 	}
 }

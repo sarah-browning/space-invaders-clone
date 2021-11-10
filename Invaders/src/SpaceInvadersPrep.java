@@ -3,6 +3,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.JFrame;
 
@@ -14,8 +16,8 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 	private Thread t;
 	private BufferedImage background;
 	private Starship starship;
-	private GameController alienList, bulletList;
-	
+	private GameController controller;
+	private int bulletCount = 0;	
 	
 	//Prepare GUI
 	public SpaceInvadersPrep() {
@@ -37,12 +39,8 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 		//Load Components
 		addKeyListener(this);
 		starship = new Starship( 70, 60, this);
-		bulletList = new GameController(this);
-//		alienList = new GameController(this);
-		
-		//Initiate alien movement
-		
-		
+		controller = new GameController(this);
+
 	}
 	
 	//Start the thread if not already running
@@ -96,7 +94,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 			
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer+= 1000;
-				System.out.println(updates + " Ticks, FPS " + frames);
+				System.out.println(updates + " TPS, FPS " + frames);
 				updates = 0;
 				frames = 0;
 			}
@@ -107,7 +105,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 	//Update Method
 	private void update() {
 		starship.update();
-		bulletList.update();
+		controller.update();
 	}
 	
 	//Render Method
@@ -125,10 +123,19 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 		
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 		starship.render(g);
-		bulletList.render(g);
+		controller.render(g);
 
 		g.dispose();
 		bs.show();
+	}
+	
+	//Collision Detection Method
+	public void checkCollision() {	
+		//TODO - Add collision method
+		
+		//if bullet intersects alien
+		//remove alien from linked list/ set visible false
+		//add points to current score and update the score
 	}
 	
 	//Main
@@ -157,7 +164,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 			starship.setSpeed(+ GameProperties.CHAR_STEP);
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && starship.getShooting() == false) {
 			starship.setShooting(true);
-			bulletList.addBullet(new Bullet(starship.getX() + 6, starship.getY() - 35   , this));
+			controller.addBullet(new Bullet(starship.getX() + 6, starship.getY() - 35   , this));
 		}
 	}
 

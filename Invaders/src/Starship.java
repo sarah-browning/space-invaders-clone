@@ -42,7 +42,7 @@ public class Starship extends Sprite {
 	public void update() {
 		x += speed;
 		
-		//keep starship in bounds
+		//Keep Starship in window bounds
 		if (x <= 40) x = 40;
 		if (x >= 790 ) x = 790;
 	}

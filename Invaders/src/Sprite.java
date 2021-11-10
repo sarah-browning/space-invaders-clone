@@ -14,20 +14,20 @@ public class Sprite {
 	protected String filename;
 	
 	//Getters
-	public int getX() { return x; }
-	public int getY() { return y; }
-	public int getWidth() { return width; }
-	public int getHeight() { return height; }
-	public Rectangle getRectangle() { return r; }
-	public Boolean getVisible() { return visible; }
-	public String getFilename() { return filename; }
+	public int getX() { return this.x; }
+	public int getY() { return this.y; }
+	public int getWidth() { return this.width; }
+	public int getHeight() { return this.height; }
+	public Rectangle getRectangle() { return this.r; }
+	public Boolean getVisible() { return this.visible; }
+	public String getFilename() { return this.filename; }
 	
 	//Setters
-	public void setX(int x) { this.x = x; }
-	public void setY(int y) { this.y = y; }
-	public void setWidth(int width) { this.width = width; }
-	public void setHeight(int height) { this.height = height; }
-	public void setRectangel(Rectangle r) { this.r = r; }
+	public void setX(int x) { this.x = x; this.r.setLocation(this.x, this.y); }
+	public void setY(int y) { this.y = y; this.r.setLocation(this.x, this.y); }
+	public void setWidth(int width) { this.width = width; this.r.setSize(this.width, this.height); }
+	public void setHeight(int height) { this.height = height; this.r.setSize(this.width, this.height); }
+	public void setRectangle(Rectangle r) { this.r = r; }
 	public void setVisible(Boolean visible) { this.visible = visible;}
 	public void setFilename(String filename) { this.filename = filename; }
 	
