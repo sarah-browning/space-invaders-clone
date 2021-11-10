@@ -31,7 +31,7 @@ public class Starship extends Sprite {
 	}
 	
 	//Constructor
-	public Starship(int x, int y, SpaceInvadersPrep game) {
+	public Starship(int x, int y, SpaceInvaders game) {
 		super(400, 550, 70, 60);
 		this.dying = false;
 		this.shooting = false;

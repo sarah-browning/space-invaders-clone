@@ -17,7 +17,7 @@ public class Bullet extends Sprite {
 	}
 	
 	//Constructor
-	public Bullet(int x, int y, SpaceInvadersPrep game) {
+	public Bullet(int x, int y, SpaceInvaders game) {
 		super(x, y, 55, 51);
 		ImageLoader loader = new ImageLoader();
 		bullet = loader.loadImage("/images/bullet.png");

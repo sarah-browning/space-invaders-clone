@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 import javax.swing.JFrame;
 
-public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
+public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 	
 	//Attributes
 	private static final long serialVersionUID = 9121643710941167328L;
@@ -20,7 +20,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 	private int bulletCount = 0;	
 	
 	//Prepare GUI
-	public SpaceInvadersPrep() {
+	public SpaceInvaders() {
 		super("Space Invaders");
 		setSize(GameProperties.SCREEN_WIDTH, GameProperties.SCREEN_HEIGHT);
 		setResizable(false);
@@ -98,6 +98,9 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 				updates = 0;
 				frames = 0;
 			}
+			try {
+				Thread.sleep(0);
+			} catch (Exception e) { }
 		}
 		stop();
 	}
@@ -133,6 +136,8 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 	public void checkCollision() {	
 		//TODO - Add collision method
 		
+		//https://stackoverflow.com/questions/56169028/how-to-access-a-getter-from-an-object-of-a-linkedlist
+		
 		//if bullet intersects alien
 		//remove alien from linked list/ set visible false
 		//add points to current score and update the score
@@ -140,7 +145,7 @@ public class SpaceInvadersPrep extends JFrame implements KeyListener, Runnable {
 	
 	//Main
 	public static void main( String[] args ) {
-		SpaceInvadersPrep game = new SpaceInvadersPrep();
+		SpaceInvaders game = new SpaceInvaders();
 		game.setVisible(true);
 		game.start();
 	}

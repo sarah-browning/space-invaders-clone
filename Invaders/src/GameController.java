@@ -9,11 +9,11 @@ public class GameController {
 	private LinkedList<Alien> aliens = new LinkedList<Alien>();
 	private Bullet TempBullet;
 	private Alien TempAlien;
-	private SpaceInvadersPrep game;
+	private SpaceInvaders game;
 	private int bulletCount = 0;
 	
 	//Getters
-	public SpaceInvadersPrep getGame() {
+	public SpaceInvaders getGame() {
 		return game;
 	}
 	public int getBulletCount() {
@@ -33,7 +33,7 @@ public class GameController {
 	}
 	
 	//Setters
-	public void setGame(SpaceInvadersPrep game) {
+	public void setGame(SpaceInvaders game) {
 		this.game = game;
 	}
 	public void setBulletCount(int bulletCount) {
@@ -53,7 +53,7 @@ public class GameController {
 	}
 
 	//Constructor
-	public GameController(SpaceInvadersPrep game) {
+	public GameController(SpaceInvaders game) {
 		this.setGame(game);
 		
 		
@@ -82,14 +82,14 @@ public class GameController {
 		for(int i = 0; i < aliens.size(); i++) {
 			TempAlien = aliens.get(i);
 			if (aliens.getFirst().getX() <= 40) {
-				TempAlien.setSpeed(+1);
 				TempAlien.setY(TempAlien.getY() + 10);
+				TempAlien.setSpeed(+1);
 				//TODO - Figure out how to stop first alien from dropping 10 pixels 
 			}
 			
 			if (aliens.getLast().getX() >= (GameProperties.SCREEN_WIDTH - 90)) {
-				TempAlien.setSpeed(-1);
 				TempAlien.setY(TempAlien.getY() + 10);
+				TempAlien.setSpeed(-1);
 			}
 			
 			TempAlien.update();
