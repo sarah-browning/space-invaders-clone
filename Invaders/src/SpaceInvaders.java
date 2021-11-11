@@ -1,6 +1,8 @@
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -15,6 +17,14 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 	private BufferedImage background;
 	private Starship starship;
 	private GameController controller;
+//	private Menu menu;
+	
+//	public static enum STATE {
+//		MENU,
+//		GAME
+//	};
+//	
+//	public static STATE state = STATE.MENU;
 	
 	//Prepare GUI
 	public SpaceInvaders() {
@@ -37,6 +47,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		addKeyListener(this);
 		starship = new Starship( 70, 60, this);
 		controller = new GameController(this);
+//		menu = new Menu();
 
 	}
 	
@@ -104,8 +115,11 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 	
 	//Update Method
 	private void update() {
-		starship.update();
-		controller.update();
+//		if (state == STATE.GAME) {
+			starship.update();
+			controller.update();
+//		}
+		
 	}
 	
 	//Render Method
@@ -122,8 +136,13 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		Graphics g = bs.getDrawGraphics();
 		
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-		starship.render(g);
-		controller.render(g);
+		
+//		if (state == STATE.GAME) {
+			starship.render(g);
+			controller.render(g);
+//		} else if (state == STATE.MENU) {
+//			menu.render(g);
+//		}
 
 		g.dispose();
 		bs.show();
@@ -134,7 +153,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		//TODO - Add collision method
 		
 		//if bullet intersects alien
-		//remove alien from linked list/ set visible false
+		//remove alien from screen
 		//add points to current score and update the score
 	}
 	
@@ -154,17 +173,16 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
-		//if left arrow key is pressed
 		if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-			//move starship left
 			starship.setSpeed(- GameProperties.CHAR_STEP);
-		//else if right arrow key is pressed
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-			//move starship right
 			starship.setSpeed(+ GameProperties.CHAR_STEP);
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && starship.getShooting() == false) {
-			starship.setShooting(true);
-			controller.addBullet(new Bullet(starship.getX() + 6, starship.getY() - 35   , this));
+//			if (state == STATE.GAME) {
+				starship.setShooting(true);
+				controller.addBullet(new Bullet(starship.getX() + 6, starship.getY() - 35   , this));
+//			}
+			
 		}
 	}
 
@@ -177,7 +195,44 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE ) {
 			starship.setShooting(false);
 		}
-		
 	}
-	
+
+//	@Override
+//	public void mouseClicked(MouseEvent e) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void mousePressed(MouseEvent e) {
+//		if (state == STATE.MENU) {
+//			int mx = e.getX();
+//			int my = e.getY();
+//			
+//			if (mx >= GameProperties.SCREEN_WIDTH / 2 -125 && mx <= GameProperties.SCREEN_WIDTH / 2 +125) {
+//				if (my >= 250 && my <= 300) {
+//					//Play Button Pressed
+//					state = STATE.GAME;
+//				}
+//			}
+//		}
+//	}
+
+//	@Override
+//	public void mouseReleased(MouseEvent e) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void mouseEntered(MouseEvent e) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void mouseExited(MouseEvent e) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 }
