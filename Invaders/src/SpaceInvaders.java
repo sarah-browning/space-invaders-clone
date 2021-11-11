@@ -1,8 +1,6 @@
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -19,12 +17,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 	private GameController controller;
 //	private Menu menu;
 	
-//	public static enum STATE {
-//		MENU,
-//		GAME
-//	};
-//	
-//	public static STATE state = STATE.MENU;
+	private STATE state = STATE.GAME;
 	
 	//Prepare GUI
 	public SpaceInvaders() {
@@ -48,7 +41,6 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		starship = new Starship( 70, 60, this);
 		controller = new GameController(this);
 //		menu = new Menu();
-
 	}
 	
 	//Start the thread if not already running
@@ -124,15 +116,13 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 	
 	//Render Method
 	private void render() {
-		//create a strategy for multi-buffering
 		BufferStrategy bs = this.getBufferStrategy();
 		
 		if (bs == null) {
 			createBufferStrategy(3);
 			return;
 		}
-
-		//draw the buffered graphics
+		
 		Graphics g = bs.getDrawGraphics();
 		
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
@@ -197,42 +187,5 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		}
 	}
 
-//	@Override
-//	public void mouseClicked(MouseEvent e) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void mousePressed(MouseEvent e) {
-//		if (state == STATE.MENU) {
-//			int mx = e.getX();
-//			int my = e.getY();
-//			
-//			if (mx >= GameProperties.SCREEN_WIDTH / 2 -125 && mx <= GameProperties.SCREEN_WIDTH / 2 +125) {
-//				if (my >= 250 && my <= 300) {
-//					//Play Button Pressed
-//					state = STATE.GAME;
-//				}
-//			}
-//		}
-//	}
 
-//	@Override
-//	public void mouseReleased(MouseEvent e) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void mouseEntered(MouseEvent e) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void mouseExited(MouseEvent e) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 }
