@@ -56,11 +56,11 @@ public class GameController {
 		this.setGame(game);
 		
 		for (int x = 40; x < 600 ; x += 55) {
-			aliens.add(new Alien(x, 80, 50, 50, 50, "/resources/alien1.png"));
-			aliens.add(new Alien (x, 130, 50, 50, 40, "/resources/alien2.png"));
-			aliens.add(new Alien (x, 180, 50, 50, 40, "/resources/alien2.png"));
-			aliens.add(new Alien (x, 230, 50, 50, 20, "/resources/alien3.png"));
-			aliens.add(new Alien (x, 280, 50, 50, 20, "/resources/alien3.png"));
+			aliens.add(new Alien(x, 80, 50, 50, 50, "/res/alien1.png"));
+			aliens.add(new Alien (x, 130, 50, 50, 40, "/res/alien2.png"));
+			aliens.add(new Alien (x, 180, 50, 50, 40, "/res/alien2.png"));
+			aliens.add(new Alien (x, 230, 50, 50, 20, "/res/alien3.png"));
+			aliens.add(new Alien (x, 280, 50, 50, 20, "/res/alien3.png"));
 		}
 	}
 	

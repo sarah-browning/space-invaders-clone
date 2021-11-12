@@ -34,7 +34,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		
 		//Load Background
 		ImageLoader loader = new ImageLoader();
-		background = loader.loadImage("/resources/starbkg.jpg");
+		background = loader.loadImage("res/starbkg.jpg");
 		
 		//Load Components
 		addKeyListener(this);

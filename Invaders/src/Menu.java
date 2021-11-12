@@ -1,65 +1,36 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
-public class Menu {
-		
-	private Font titleFont;
-	private Font btnFont;
-	private Rectangle btnPlay;
-	private Rectangle btnScore;
-	private Rectangle btnQuit;
+import javax.swing.JFrame;
+
+public class Menu extends JFrame implements ActionListener {
 	
+	private static final long serialVersionUID = 9221558304803846443L;
 	
-	public Menu() {
-		 btnPlay = new Rectangle(GameProperties.SCREEN_WIDTH / 2 -125, 300, 250, 50);
-		 btnScore = new Rectangle(GameProperties.SCREEN_WIDTH / 2 -125, 400, 250, 50);
-		 btnQuit = new Rectangle(GameProperties.SCREEN_WIDTH / 2 -125, 500, 250, 50);
+	private BufferedImage title, btnPlay, btnScore, btnQuit, scoreTable;
+	
+	public void render (Graphics g) {
 		
+		ImageLoader loader = new ImageLoader();
+		title = loader.loadImage("/res/title.png");
+		btnPlay = loader.loadImage("/res/playbutton.png");
+		btnScore = loader.loadImage("/res/scorebutton.png");
+		btnQuit = loader.loadImage("/res/quitbutton.png");
+		scoreTable = loader.loadImage("/res/scoretable.png");
 		
-		try {
-			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("MassEffectGame-123-400.ttf")).deriveFont(50f);
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("MassEffectGame-123-400.ttf")));
-			
-		} catch(IOException | FontFormatException e) {
-			
-		}
-		
-		try {
-			btnFont = Font.createFont(Font.TRUETYPE_FONT, new File("MassEffectGame-123-400.ttf")).deriveFont(20f);
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("MassEffectGame-123-400.ttf")));
-			
-		} catch(IOException | FontFormatException e) {
-			
-		}
+		g.drawImage(title, 110, 125, null);
+		g.drawImage(scoreTable, 150, 315,null);
+		g.drawImage(btnPlay, 500, 300, null);
+		g.drawImage(btnScore, 500, 375, null);
+		g.drawImage(btnQuit, 500, 450, null);
 	}
 
-	public void render (Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 		
-		g.setFont(titleFont);
-		g.setColor(Color.GREEN);
-		g.drawString("Invaders From", 180, 150);
-		g.drawString("Space", 330, 225);
-		
-		g.setFont(btnFont);
-		g.drawString("Play Game", btnPlay.x +50, btnPlay.y +30);
-		g2d.draw(btnPlay);
-		g.drawString("High Scores", btnScore.x +40, btnScore.y +30);
-		g2d.draw(btnScore);
-		g.drawString("Quit Game", btnQuit.x +50, btnQuit.y +30);
-		g2d.draw(btnQuit);
 	}
 
 }

@@ -36,7 +36,7 @@ public class Starship extends Sprite {
 		this.isDying = false;
 		this.isShooting = false;
 		ImageLoader loader = new ImageLoader();
-		starship = loader.loadImage("/resources/starship.png");
+		starship = loader.loadImage("/res/starship.png");
 	}
 
 	public void update() {
