@@ -15,9 +15,9 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 	private BufferedImage background;
 	private Starship starship;
 	private GameController controller;
-//	private Menu menu;
+	private Menu menu;
 	
-	private STATE state = STATE.GAME;
+	private STATE state = STATE.MENU;
 	
 	//Prepare GUI
 	public SpaceInvaders() {
@@ -34,13 +34,13 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		
 		//Load Background
 		ImageLoader loader = new ImageLoader();
-		background = loader.loadImage("/images/starbkg.jpg");
+		background = loader.loadImage("/resources/starbkg.jpg");
 		
 		//Load Components
 		addKeyListener(this);
 		starship = new Starship( 70, 60, this);
 		controller = new GameController(this);
-//		menu = new Menu();
+		menu = new Menu();
 	}
 	
 	//Start the thread if not already running
@@ -94,7 +94,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 			
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer+= 1000;
-				System.out.println(updates + " TPS, FPS " + frames);
+//				System.out.println(updates + " TPS, FPS " + frames);
 				updates = 0;
 				frames = 0;
 			}
@@ -107,10 +107,10 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 	
 	//Update Method
 	private void update() {
-//		if (state == STATE.GAME) {
+		if (state == STATE.GAME) {
 			starship.update();
 			controller.update();
-//		}
+		}
 		
 	}
 	
@@ -127,24 +127,17 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 		
-//		if (state == STATE.GAME) {
+		if (state == STATE.MENU) {
+			menu.render(g);
+		} else if (state == STATE.GAME) {
 			starship.render(g);
 			controller.render(g);
-//		} else if (state == STATE.MENU) {
-//			menu.render(g);
-//		}
+		} else if (state == STATE.SCORE) {
+			//TODO - Add score screen
+		}
 
 		g.dispose();
 		bs.show();
-	}
-	
-	//Collision Detection Method
-	private void checkCollision() {	
-		//TODO - Add collision method
-		
-		//if bullet intersects alien
-		//remove alien from screen
-		//add points to current score and update the score
 	}
 	
 	//Main
@@ -168,10 +161,10 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			starship.setSpeed(+ GameProperties.CHAR_STEP);
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && starship.getShooting() == false) {
-//			if (state == STATE.GAME) {
+			if (state == STATE.GAME) {
 				starship.setShooting(true);
-				controller.addBullet(new Bullet(starship.getX() + 6, starship.getY() - 35   , this));
-//			}
+				controller.addBullet(new Bullet((int)starship.getX() + 20, (int)starship.getY() - 40, this));
+			}
 			
 		}
 	}
@@ -186,6 +179,4 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 			starship.setShooting(false);
 		}
 	}
-
-
 }

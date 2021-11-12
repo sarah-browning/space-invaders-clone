@@ -20,12 +20,12 @@ public class Bullet extends Sprite {
 	public Bullet(int x, int y, SpaceInvaders game) {
 		super(x, y, 55, 51);
 		ImageLoader loader = new ImageLoader();
-		bullet = loader.loadImage("/images/bullet.png");
+		bullet = loader.loadImage("/resources/bullet1.png");
 	}
 
 	//Other Functions
 	public void update() {
-		y -= GameProperties.CHAR_STEP;
+		setY(y - GameProperties.CHAR_STEP);
 		
 	}
 	
