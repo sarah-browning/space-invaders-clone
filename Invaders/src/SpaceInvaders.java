@@ -5,12 +5,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.swing.JFrame;
 
@@ -86,18 +80,12 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 			//draw Game Over You Win!
 			System.out.println("You Win!");
 			System.out.println("Your score is " + controller.getScore() + ".");
-			name = JOptionPane.showInputDialog("Please enter your name.");
-			score = controller.getScore();
-			sql = "INSERT INTO SCORE (NAME, SCORE) VALUES " +
-				  "(" + name + ", " + score ")";
-		}
 			state = STATE.SCORE;
 		//else if the aliens reach the invasion line
 		} else if (controller.getInvasionLine() == true) {
 			//draw Game Over You Lose!
 			System.out.println("You Lose!");
 			System.out.println("Your score is " + controller.getScore() + ".");
-			storeScore();
 			state = STATE.SCORE;
 		}
 	}
@@ -183,80 +171,8 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	public static void main( String[] args ) {
 		SpaceInvaders game = new SpaceInvaders();
 		
-		//Add SQL Connection
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs;
-		
-		try {
-			
-			Class.forName("org.sqlite.JDBC");
-			System.out.println("Database driver loaded.");
-			
-			String dbURL = "jdbc:sqlite:scores.db";
-			conn = DriverManager.getConnection(dbURL);
-			
-			if (conn != null) {
-				System.out.println("Connected to database.");
-				//Turns off auto commit. Forces a two step process of submitting and then committing.
-				conn.setAutoCommit(false);
-				
-				DatabaseMetaData dm = (DatabaseMetaData) conn.getMetaData();
-				System.out.println("Driver name: " + dm.getDriverName());
-				System.out.println("Driver version: " + dm.getDriverVersion());
-				System.out.println("Product name: " + dm.getDatabaseProductName());
-				System.out.println("Product version: " + dm.getDatabaseProductVersion());
-				
-				stmt = conn.createStatement();
-				
-				String sql = "CREATE TABLE IF NOT EXISTS SCORE " + 
-							 "(ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-							 " NAME CHAR(50) NOT NULL, " +
-							 " SCORE INT NOT NULL, " +
-							 " DATE TEXT NOT NULL)";
-				
-							 " SCORE INT NOT NULL)";				
-				stmt.executeUpdate(sql);
-				conn.commit();
-				
-				System.out.println("Score table created successfully.");
-				
-				System.out.println("");
-				rs = stmt.executeQuery("SELECT * FROM SCORE");
-				DisplayRecords(rs);
-				rs.close();
-				
-				conn.close();
-			}
-			
-			
-		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
 		game.setVisible(true);
 		game.start();
-	}
-
-	private static void DisplayRecords(ResultSet rs) throws SQLException {
-		while ( rs.next() ) {
-			int id = rs.getInt("id");
-			String name = rs.getString("name");
-			int score = rs.getInt("score");
-			String date = rs.getString("date");
-			
-			System.out.println("ID = " + id);
-			System.out.println("Name = " + name);
-			System.out.println("Score = " + score);
-			System.out.println("Date = " + date);
-		}
-		
 	}
 
 	//Key Listeners
