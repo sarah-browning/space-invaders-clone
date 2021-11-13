@@ -20,6 +20,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	private GameController controller;
 	private Menu menu;
 	private HighScore highScore;
+	private static Database db;
 	
 	private STATE state = STATE.MENU;
 	
@@ -171,6 +172,8 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	public static void main( String[] args ) {
 		SpaceInvaders game = new SpaceInvaders();
 		
+		db.connect();
+		
 		game.setVisible(true);
 		game.start();
 	}
@@ -192,7 +195,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && starship.getShooting() == false) {
 			if (state == STATE.GAME) {
 				starship.setShooting(true);
-				controller.addBullet(new Bullet((int)starship.getX() + 20, (int)starship.getY() - 40, this));
+				controller.addBullet(new Bullet((int)starship.getX() + 24, (int)starship.getY() - 10, this));
 			}
 			
 		}
