@@ -25,8 +25,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	private Starship starship;
 	private GameController controller;
 	private Menu menu;
-	private Score score;
-//	private EndScreen gameOver;
+	private HighScore highScore;
 	
 	private STATE state = STATE.MENU;
 	
@@ -53,6 +52,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 		starship = new Starship( 70, 60, this);
 		controller = new GameController(this);
 		menu = new Menu();
+		highScore = new HighScore();
 	}
 	
 	//Start the thread if not already running
@@ -77,6 +77,29 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 			e.printStackTrace();
 		}
 		System.exit(1);
+	}
+	
+	//Check Win/Loss Condition
+	public void checkWinLoss() {
+		//if all aliens are destroyed
+		if (controller.getAlienCount() == 0) {
+			//draw Game Over You Win!
+			System.out.println("You Win!");
+			System.out.println("Your score is " + controller.getScore() + ".");
+			name = JOptionPane.showInputDialog("Please enter your name.");
+			score = controller.getScore();
+			sql = "INSERT INTO SCORE (NAME, SCORE) VALUES " +
+				  "(" + name + ", " + score ")";
+		}
+			state = STATE.SCORE;
+		//else if the aliens reach the invasion line
+		} else if (controller.getInvasionLine() == true) {
+			//draw Game Over You Lose!
+			System.out.println("You Lose!");
+			System.out.println("Your score is " + controller.getScore() + ".");
+			storeScore();
+			state = STATE.SCORE;
+		}
 	}
 	
 	@Override
@@ -124,6 +147,8 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 			controller.update();
 		}
 		
+		checkWinLoss();
+		
 	}
 	
 	//Render Method
@@ -145,7 +170,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 			starship.render(g);
 			controller.render(g);
 		} else if (state == STATE.SCORE) {
-			score.render(g);
+			highScore.render(g);
 		} else if (state == STATE.END) {
 //			gameOver.render(g);
 		}
@@ -190,8 +215,10 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 							 " SCORE INT NOT NULL, " +
 							 " DATE TEXT NOT NULL)";
 				
+							 " SCORE INT NOT NULL)";				
 				stmt.executeUpdate(sql);
 				conn.commit();
+				
 				System.out.println("Score table created successfully.");
 				
 				System.out.println("");
@@ -278,28 +305,47 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 		// TODO Auto-generated method stub
 		int mx = e.getX();
 		int my = e.getY();
-		
-		//Play Button
-		if (mx >= 500 && mx <= 755) {
-			if (my >= 300 && my <= 355) {
-				//Pressed Play Button
-				state = STATE.GAME;
+
+		if (state == STATE.MENU) {
+			
+			//Play Button
+			if (mx >= 500 && mx <= 755) {
+				if (my >= 250 && my <= 305) {
+					//Pressed Play Button
+					state = STATE.GAME;
+				}
 			}
-		}
-		
-		//Score Button
-		if (mx >= 500 && mx <= 755) {
-			if (my >= 375 && my <= 630) {
-				//Pressed Score button
-				state = STATE.SCORE;
+			
+			//Score Button
+			if (mx >= 500 && mx <= 755) {
+				if (my >= 325 && my <= 380) {
+					//Pressed Score button
+					state = STATE.SCORE;
+				}
 			}
-		}
-		
-		//Quit Button
-		if (mx >= 500 && mx <= 755) {
-			if (my >= 450 && my <= 705) {
-				//Exit Game
-				System.exit(1);
+			
+			//Quit Button
+			if (mx >= 500 && mx <= 755) {
+				if (my >= 400 && my <= 455) {
+					//Exit Game
+					System.exit(1);
+				}
+			}
+		} else if (state == STATE.SCORE) {
+			//Play Button
+			if (mx >= 175 && mx <= 430) {
+				if (my >= 575 && my <= 630) {
+					//Pressed Play Button
+					state = STATE.GAME;
+				}
+			}
+			
+			//Quit Button
+			if (mx >= 470 && mx <= 725) {
+				if (my >= 575 && my <= 630) {
+					//Exit Game
+					System.exit(1);
+				}
 			}
 		}
 	}
