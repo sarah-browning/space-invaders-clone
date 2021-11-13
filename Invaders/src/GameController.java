@@ -12,7 +12,6 @@ public class GameController {
 	private int bulletCount = 0;
 	private int alienCount = 55;
 	private int score = 0;
-	private Boolean winCondition = false;
 	private Boolean invasionLine = false;
 	
 	//Constructor
@@ -33,7 +32,6 @@ public class GameController {
 		moveAliens();
 		moveBullets();
 		checkCollision();
-		checkWinLoss();
 	}
 	
 	//Render Method
@@ -57,7 +55,6 @@ public class GameController {
 	            Alien alien = aliens.get(j);
 	
 	            if(bullet.intersects(alien)){
-	            	//add points for that alien to score
 	            	removeAlien(alien);
 	            	removeBullet(bullet);
 	                break;
@@ -65,27 +62,6 @@ public class GameController {
 	        }
 	    }
     }
-	
-	//Check Win/Loss Condition
-	public void checkWinLoss() {
-		//if all aliens are destroyed
-		if (getAlienCount() == 0) {
-			//draw Game Over You Win!
-			System.out.println("You Win!");
-			System.out.println("Your score is " + score + ".");
-		//else if the aliens reach the invasion line
-		} else if (getInvasionLine() == true) {
-			setWinCondition(true);
-			//draw Game Over You Lose!
-			System.out.println("You Lose!");
-			System.out.println("Your score is " + score + ".");
-		}
-		
-		//JOption Pane to save name and score in database?
-		
-		//Display the High Score screen
-		
-	}
 	
 	//Move Bullets
 	public void moveBullets() {
@@ -185,10 +161,6 @@ public class GameController {
 		return invasionLine;
 	}
 
-	public Boolean getWinCondition() {
-		return winCondition;
-	}
-
 	//Setters
 	public void setGame(SpaceInvaders game) {
 		this.game = game;
@@ -220,9 +192,5 @@ public class GameController {
 	
 	public void setInvasionLine(Boolean invasionLine) {
 		this.invasionLine = invasionLine;
-	}
-	
-	public void setWinCondition(Boolean winCondition) {
-		this.winCondition = winCondition;
 	}
 }
