@@ -1,11 +1,11 @@
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-public class Menu extends JFrame implements ActionListener {
+public class Menu extends JFrame{
 	
 	private static final long serialVersionUID = 9221558304803846443L;
 	
@@ -25,12 +25,8 @@ public class Menu extends JFrame implements ActionListener {
 		g.drawImage(btnPlay, 500, 300, null);
 		g.drawImage(btnScore, 500, 375, null);
 		g.drawImage(btnQuit, 500, 450, null);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
+		//TODO add something about player ship and how to fire
 	}
 
 }

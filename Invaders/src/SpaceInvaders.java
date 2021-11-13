@@ -1,12 +1,14 @@
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
+public class SpaceInvaders extends JFrame implements KeyListener, MouseListener, Runnable {
 	
 	//Attributes
 	private static final long serialVersionUID = 9121643710941167328L;
@@ -38,6 +40,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		
 		//Load Components
 		addKeyListener(this);
+		addMouseListener(this);
 		starship = new Starship( 70, 60, this);
 		controller = new GameController(this);
 		menu = new Menu();
@@ -147,6 +150,8 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		game.start();
 	}
 
+	
+	//Key Listeners
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -178,5 +183,61 @@ public class SpaceInvaders extends JFrame implements KeyListener, Runnable {
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE ) {
 			starship.setShooting(false);
 		}
+	}
+
+	//Mouse Listeners
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		int mx = e.getX();
+		int my = e.getY();
+		
+		//Play Button
+		if (mx >= 500 && mx <= 755) {
+			if (my >= 300 && my <= 355) {
+				//Pressed Play Button
+				state = STATE.GAME;
+			}
+		}
+		
+		//Score Button
+		if (mx >= 500 && mx <= 755) {
+			if (my >= 375 && my <= 630) {
+				//Pressed Score button
+				state = STATE.SCORE;
+			}
+		}
+		
+		//Quit Button
+		if (mx >= 500 && mx <= 755) {
+			if (my >= 450 && my <= 705) {
+				//Exit Game
+				System.exit(1);
+			}
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
