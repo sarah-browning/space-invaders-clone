@@ -5,7 +5,8 @@ public class Alien extends Sprite {
 	
 	//Attributes
 	private static final long serialVersionUID = -173465902261771273L;
-	private int speed, velocity, pointValue;
+	private double speed, velocity;
+	private int pointValue;
 	private Boolean isShooting;
 	private BufferedImage alien;
 
@@ -13,6 +14,7 @@ public class Alien extends Sprite {
 	public Alien(int x, int y, int width, int height, int pointValue, String filename) {
 		super(x, y, width, height);
 		this.pointValue = pointValue;
+		this.speed = 0.25;
 		this.velocity = 1;
 		this.isShooting = false;
 		ImageLoader loader = new ImageLoader();
@@ -21,7 +23,7 @@ public class Alien extends Sprite {
 	 
 	//Update Method
 	public void update() {
-		setX(x+ velocity);
+		setX((int) (x+ velocity));
 	}
 	
 	//Render Method
@@ -34,11 +36,11 @@ public class Alien extends Sprite {
 		return pointValue;
 	}
 	
-	public int getVelocity() {
+	public double getVelocity() {
 		return velocity;
 	}
 	
-	public int getSpeed() {
+	public double getSpeed() {
 		return speed;
 	}
 	
@@ -51,11 +53,11 @@ public class Alien extends Sprite {
 		this.pointValue = pointValue;
 	}
 	
-	public void setVelocity(int velocity) {
+	public void setVelocity(double velocity) {
 		this.velocity = velocity;		
 	}
 	
-	public void setSpeed(int speed) {
+	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
 	

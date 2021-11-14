@@ -2,6 +2,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -13,14 +14,17 @@ public class Menu extends JFrame{
 	
 	//Render Method
 	public void render (Graphics g) {
-		
-		ImageLoader loader = new ImageLoader();
-		title = loader.loadImage("/res/title.png");
-		btnPlay = loader.loadImage("/res/playbutton.png");
-		btnScore = loader.loadImage("/res/scorebutton.png");
-		btnQuit = loader.loadImage("/res/quitbutton.png");
-		scoreTable = loader.loadImage("/res/scoretable.png");
-		instructions = loader.loadImage("/res/instructions.png");
+		try {
+			ImageLoader loader = new ImageLoader();
+			title = loader.loadImage("/res/title.png");
+			btnPlay = loader.loadImage("/res/playbutton.png");
+			btnScore = loader.loadImage("/res/scorebutton.png");
+			btnQuit = loader.loadImage("/res/quitbutton.png");
+			scoreTable = loader.loadImage("/res/scoretable.png");
+			instructions = loader.loadImage("/res/instructions.png");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		g.drawImage(title, 110, 115, null);
 		g.drawImage(scoreTable, 150, 265,null);

@@ -6,8 +6,10 @@ public class GameController {
 	//Attributes
 	private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
 	private LinkedList<Alien> aliens = new LinkedList<Alien>();
+	private LinkedList<Missile> missiles = new LinkedList<Missile>();
 	private Bullet TempBullet;
 	private Alien TempAlien;
+	private Missile TempMissile;
 	private SpaceInvaders game;
 	private int bulletCount = 0;
 	private int alienCount = 55;
@@ -31,9 +33,10 @@ public class GameController {
 	public void update() {
 		moveAliens();
 		moveBullets();
+//		fireMissiles();
 		checkCollision();
 	}
-	
+
 	//Render Method
 	public void render(Graphics g) {
 		for (int i = 0; i < bullets.size(); i++) {
@@ -80,25 +83,33 @@ public class GameController {
 	public void moveAliens() {
 		for(int i = 0; i < aliens.size(); i++) {
 			TempAlien = aliens.get(i);
-			
-			if (aliens.getFirst().getX() <= 40) {
-				TempAlien.setY((int)TempAlien.getY() + 10);
-				TempAlien.setVelocity(+1);
-				//TODO - Figure out how to stop first alien from sliding 1 pixel on each change 
-			}
+			double speed = TempAlien.getSpeed();
 			
 			if (aliens.getLast().getX() >= (GameProperties.SCREEN_WIDTH - 90)) {
 				TempAlien.setY((int)TempAlien.getY() + 10);
-				TempAlien.setVelocity(-1);
+				TempAlien.setSpeed(+speed);
+				TempAlien.setVelocity(-speed -1);
+				System.out.println("Speed is " + TempAlien.getSpeed() + " and velocity is " + TempAlien.getVelocity());
+			}
+			
+			if (aliens.getLast().getX() <= 591) {
+				TempAlien.setY((int)TempAlien.getY() + 10);
+				TempAlien.setSpeed(++speed);
+				TempAlien.setVelocity(+speed +1);
+				System.out.println("Speed is " + TempAlien.getSpeed() + " and velocity is " + TempAlien.getVelocity());
 			}
 			
 			if (TempAlien.getY() >= 461) {
 				invasionLine = true;
-			}
-			
+			}				
 			TempAlien.update();
 		}
 	}
+
+//	private void fireMissiles() {
+//		// TODO Auto-generated method stub
+//		
+//	}
 	
 	//Add Bullet Method
 	public void addBullet(Bullet bullet) {
@@ -128,6 +139,16 @@ public class GameController {
 		System.out.println("The score is now " + score + ".");
 	}
 	
+//	//Add Missile Method
+//	public void addMissile(Missile missile) {
+//		missiles.add(missile);
+//	}
+//	
+//	//Remove Missile Method
+//	public void removeMissile(Missile missile) {
+//		missiles.remove();
+//	}
+	
 	//Getters
 	public SpaceInvaders getGame() {
 		return game;
@@ -145,6 +166,10 @@ public class GameController {
 		return aliens;
 	}
 	
+//	public LinkedList<Missile> getMissiles() {
+//		return missiles;
+//	}
+	
 	public Bullet getTempBullet() {
 		return TempBullet;
 	}
@@ -153,6 +178,10 @@ public class GameController {
 		return TempAlien;
 	}
 	
+//	public Missile getTempMissile() {
+//		return TempMissile;
+//	}
+//	
 	public int getScore() {
 		return score;
 	}
@@ -178,12 +207,20 @@ public class GameController {
 		this.aliens = aliens;
 	}
 	
+//	public void setMissiles(LinkedList<Missile> missiles) {
+//		this.missiles = missiles;
+//	}
+//	
 	public void setTempBullet(Bullet tempBullet) {
 		TempBullet = tempBullet;
 	}
 	
 	public void setTempAlien(Alien tempAlien) {
 		TempAlien = tempAlien;
+	}
+	
+	public void setTempMissile(Missile tempMissile) {
+		TempMissile = tempMissile;
 	}
 	
 	public void setScore(int score) {

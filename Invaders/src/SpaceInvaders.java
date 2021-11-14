@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -22,8 +23,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	private Menu menu;
 	private HighScore highScore;
 	private static Database db = new Database();
-	
-	private STATE state = STATE.MENU;
+	private STATE state;
 	
 	//Prepare GUI
 	public SpaceInvaders() {
@@ -51,6 +51,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 		controller = new GameController(this);
 		menu = new Menu();
 		highScore = new HighScore();
+		state = STATE.MENU;
 	}
 	
 	//Start the thread if not already running
@@ -88,18 +89,20 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 				System.out.println("You Win!");
 				System.out.println("Your score is " + controller.getScore() + ".");
 				name = JOptionPane.showInputDialog("Congratulations! You won! Please enter your name to save your score.");
+				state = STATE.SCORE;
 				score = controller.getScore();
 				db.recordScore(name, score);
-				state = STATE.SCORE;
+				db.retrieveResults();
 				
 			//else if the aliens reach the invasion line
 			} else if (controller.getInvasionLine() == true) {
 				System.out.println("You Lose!");
 				System.out.println("Your score is " + controller.getScore() + ".");
 				name = JOptionPane.showInputDialog("GAME OVER! Sorry, you lost. Please enter your name to save your score.");
+				state = STATE.SCORE;
 				score = controller.getScore();
 				db.recordScore(name, score);
-				state = STATE.SCORE;
+				db.retrieveResults();
 			}
 		}
 	}
@@ -107,7 +110,10 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	//Reset Game State
 	public void reset() {
 		if (state == STATE.SCORE) {
-			SpaceInvaders game = new SpaceInvaders();
+			getContentPane().removeAll();
+			init();
+			
+//			main(null);
 		}
 	}
 	
@@ -133,7 +139,11 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 				updates++;
 				delta--;
 			}
-			render();
+			try {
+				render();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			frames++;
 			
 			if (System.currentTimeMillis() - timer > 1000) {
@@ -143,9 +153,10 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 				frames = 0;
 			}
 			try {
-				Thread.sleep(0);
+				Thread.sleep(25);
 			} catch (Exception e) { }
 		}
+		
 		stop();
 	}
 	
@@ -161,7 +172,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	}
 	
 	//Render Method
-	private void render() {
+	private void render() throws IOException {
 		BufferStrategy bs = this.getBufferStrategy();
 		
 		if (bs == null) {
@@ -210,9 +221,9 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	public void keyPressed(KeyEvent e) {
 		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-			starship.setVelocity(- GameProperties.CHAR_STEP);
+			starship.setVelocity(- GameProperties.CHAR_STEP * 2);
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-			starship.setVelocity(+ GameProperties.CHAR_STEP);
+			starship.setVelocity(+ GameProperties.CHAR_STEP * 2);
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && starship.getShooting() == false) {
 			if (state == STATE.GAME) {
 				starship.setShooting(true);
@@ -242,7 +253,6 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		int mx = e.getX();
 		int my = e.getY();
 
@@ -272,13 +282,21 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 					System.exit(1);
 				}
 			}
-		} else if (state == STATE.SCORE) {
-			//Play Button
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		int mx = e.getX();
+		int my = e.getY();
+		
+		if (state == STATE.SCORE) {
+			//Menu Button
 			if (mx >= 175 && mx <= 430) {
 				if (my >= 575 && my <= 630) {
-					//Pressed Play Button
+					//Pressed Menu Button
+					state = STATE.MENU;
 					reset();
-					state = STATE.GAME;
 				}
 			}
 			
@@ -290,13 +308,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 					System.exit(1);
 				}
 			}
-		}
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		}		
 	}
 
 	@Override

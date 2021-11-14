@@ -75,11 +75,13 @@ public class Database {
 	public void recordScore(String name, int score) {
 		sql = "INSERT INTO SCORE (NAME, SCORE) VALUES (?,?)";
 		try {
+			connect();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
 			pstmt.setInt(2, score);
 			pstmt.executeUpdate();
 			conn.commit();
+//			closeConnection();
 			
 			System.out.println("Record inserted.");
 			
@@ -88,12 +90,12 @@ public class Database {
 		}
 	}
 	
-	public void getDBTable() {
+	public void retrieveResults() {
 		try {
 			if (rs != null) {
 				sql = "SELECT rowid, * FROM SCORE ORDER BY (SCORE, NAME) DESC LIMIT 10";
-				
-				connect();
+//				
+//				connect();
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery(sql);
 				
@@ -102,7 +104,7 @@ public class Database {
 					System.out.println(rs.getInt("RowId") + rs.getString("name") + rs.getInt("score"));
 				}
 				rs.close();
-				closeConnection();
+//				closeConnection();
 			}
 			
 		} catch (SQLException e) {

@@ -16,7 +16,7 @@ public class Bullet extends Sprite {
 
 	//Update Method
 	public void update() {
-		setY(y - GameProperties.CHAR_STEP);
+		setY(y - GameProperties.CHAR_STEP * 3);
 		
 	}
 	
