@@ -110,10 +110,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	//Reset Game State
 	public void reset() {
 		if (state == STATE.SCORE) {
-			getContentPane().removeAll();
-			init();
-			
-//			main(null);
+			main(null);
 		}
 	}
 	
@@ -191,8 +188,6 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 			controller.render(g);
 		} else if (state == STATE.SCORE) {
 			highScore.render(g);
-		} else if (state == STATE.END) {
-//			gameOver.render(g);
 		}
 
 		g.dispose();

@@ -19,18 +19,18 @@ public class Menu extends JFrame{
 			btnQuit = loader.loadImage("/res/quitbutton.png");
 			scoreTable = loader.loadImage("/res/scoretable.png");
 			instructions = loader.loadImage("/res/instructions.png");
+		
+			g.drawImage(title, 110, 115, null);
+			g.drawImage(scoreTable, 150, 265,null);
+			g.drawImage(btnPlay, 500, 250, null);
+			g.drawImage(btnScore, 500, 325, null);
+			g.drawImage(btnQuit, 500, 400, null);
+			g.drawImage(instructions, 107, 500, null);
+			
+			g.dispose();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		g.drawImage(title, 110, 115, null);
-		g.drawImage(scoreTable, 150, 265,null);
-		g.drawImage(btnPlay, 500, 250, null);
-		g.drawImage(btnScore, 500, 325, null);
-		g.drawImage(btnQuit, 500, 400, null);
-		g.drawImage(instructions, 107, 500, null);
-		
-		g.dispose();
 	}
 
 }
