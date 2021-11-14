@@ -32,30 +32,32 @@ public class Starship extends Sprite {
 
 		g.drawImage(starship, this.x, this.y, null);
 	}
-	
+
 	//Getters
 	public int getVelocity() {
 		return velocity;
 	}
-	
-	public Boolean getDying() {
+
+	public Boolean getIsDying() {
 		return isDying;
 	}
-	
-	public Boolean getShooting() {
+
+	public Boolean getIsShooting() {
 		return isShooting;
 	}
-	
+
 	//Setters
 	public void setVelocity(int velocity) {
 		this.velocity = velocity;
 	}
-	
-	public void setDying(Boolean dying) {
-		this.isDying = dying;
+
+	public void setIsDying(Boolean isDying) {
+		this.isDying = isDying;
 	}
-	
-	public void setShooting(Boolean shooting) {
-		this.isShooting = shooting;
+
+	public void setIsShooting(Boolean isShooting) {
+		this.isShooting = isShooting;
 	}
 }
+	
+	

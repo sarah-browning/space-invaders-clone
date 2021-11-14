@@ -1,11 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -13,7 +9,7 @@ public class HighScore extends JFrame {
 	
 	//Attributes
 	private static final long serialVersionUID = -229626354180127367L;
-	private BufferedImage box, title, btnMenu, btnQuit;
+	private BufferedImage box, title, /*btnMenu,*/ btnQuit;
 	private Database db = SpaceInvaders.getDb();
 	
 	public void render(Graphics g) {
@@ -21,7 +17,7 @@ public class HighScore extends JFrame {
 			ImageLoader loader = new ImageLoader();
 			title = loader.loadImage("/res/highscores.png");
 			box = loader.loadImage("/res/scorebox.png");
-			btnMenu = loader.loadImage("/res/mainmenu.png");
+//			btnMenu = loader.loadImage("/res/mainmenu.png");
 			btnQuit = loader.loadImage("/res/quitbutton.png");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -29,8 +25,9 @@ public class HighScore extends JFrame {
 		
 		g.drawImage(title, 175, 60, null);
 		g.drawImage(box, 90, 150, null);
-		g.drawImage(btnMenu, 175, 575, null);
-		g.drawImage(btnQuit, 470, 575, null);
+//		g.drawImage(btnMenu, 175, 575, null);
+//		g.drawImage(btnQuit, 470, 575, null);
+		g.drawImage(btnQuit, 322, 575, null);
 		
 		Font scoreFont = new Font("MV Boli", Font.BOLD, 30);
 		g.setFont(scoreFont);
@@ -39,9 +36,6 @@ public class HighScore extends JFrame {
 		g.drawString("from the database but, I ran out of time", 120, 350);
 		g.drawString("to figure it out though they do get stored!", 110, 400);
 		
-//		db.connect();
 		db.retrieveResults();
-//		db.closeConnection();
-		
 	}
 }

@@ -1,5 +1,3 @@
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -11,7 +9,6 @@ import java.sql.Statement;
 public class Database {
 
 	//Attributes
-	private static final long serialVersionUID = -8138325704828394630L;
 	private static Connection conn = null;
 	private static Statement stmt = null;
 	private static PreparedStatement pstmt = null;
@@ -123,10 +120,6 @@ public class Database {
 	}
 
 	//Getters
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public static Connection getConn() {
 		return conn;
 	}
@@ -167,5 +160,5 @@ public class Database {
 	public static void setRs(ResultSet rs) {
 		Database.rs = rs;
 	}
-
+	
 }

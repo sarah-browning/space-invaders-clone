@@ -224,9 +224,9 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 			starship.setVelocity(- GameProperties.CHAR_STEP * 2);
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			starship.setVelocity(+ GameProperties.CHAR_STEP * 2);
-		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && starship.getShooting() == false) {
+		} else if (e.getKeyCode() == KeyEvent.VK_SPACE && starship.getIsShooting() == false) {
 			if (state == STATE.GAME) {
-				starship.setShooting(true);
+				starship.setIsShooting(true);
 				controller.addBullet(new Bullet((int)starship.getX() + 24, (int)starship.getY() - 10, this));
 			}
 			
@@ -240,7 +240,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D ) {
 			starship.setVelocity(0);
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE ) {
-			starship.setShooting(false);
+			starship.setIsShooting(false);
 		}
 	}
 
@@ -282,33 +282,39 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 					System.exit(1);
 				}
 			}
-		}
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		int mx = e.getX();
-		int my = e.getY();
-		
-		if (state == STATE.SCORE) {
-			//Menu Button
-			if (mx >= 175 && mx <= 430) {
-				if (my >= 575 && my <= 630) {
-					//Pressed Menu Button
-					state = STATE.MENU;
-					reset();
-				}
-			}
-			
+		} else if (state == STATE.SCORE) {
 			//Quit Button
-			if (mx >= 470 && mx <= 725) {
+			if (mx >= 322 && mx <= 577) {
 				if (my >= 575 && my <= 630) {
 					//Exit Game
 					db.closeConnection();
 					System.exit(1);
 				}
 			}
+			
+//			//Menu Button
+//			if (mx >= 175 && mx <= 430) {
+//				if (my >= 575 && my <= 630) {
+//					//Pressed Menu Button
+//					state = STATE.MENU;
+//					reset();
+//				}
+//			}
+			
+//			//Quit Button
+//			if (mx >= 470 && mx <= 725) {
+//				if (my >= 575 && my <= 630) {
+//					//Exit Game
+//					db.closeConnection();
+//					System.exit(1);
+//				}
+//			}
 		}		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -322,22 +328,14 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	//Getters
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public Boolean getRunning() {
 		return running;
 	}
 
 	public Thread getT() {
 		return t;
-	}
-
-	public BufferedImage getBackgroundImg() {
-		return background;
 	}
 
 	public Starship getStarship() {
@@ -369,10 +367,6 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 		this.t = t;
 	}
 
-	public void setBackground(BufferedImage background) {
-		this.background = background;
-	}
-
 	public void setStarship(Starship starship) {
 		this.starship = starship;
 	}
@@ -392,4 +386,5 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	public static void setDb(Database db) {
 		SpaceInvaders.db = db;
 	}
+	
 }

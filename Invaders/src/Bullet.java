@@ -25,14 +25,16 @@ public class Bullet extends Sprite {
 		
 		g.drawImage(bullet, x, y, null);
 	}
-	
+
 	//Getters
 	public BufferedImage getBullet() {
 		return bullet;
 	}
-	
+
 	//Setters
 	public void setBullet(BufferedImage bullet) {
 		this.bullet = bullet;
 	}
 }
+	
+

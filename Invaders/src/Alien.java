@@ -30,38 +30,46 @@ public class Alien extends Sprite {
 	public void render(Graphics g) {
 		g.drawImage(alien, this.x, this.y, null);
 	}
-	
+
 	//Getters
-	public int getPointValue() {
-		return pointValue;
-	}
-	
-	public double getVelocity() {
-		return velocity;
-	}
-	
 	public double getSpeed() {
 		return speed;
 	}
-	
-	public Boolean getShooting() {
+
+	public double getVelocity() {
+		return velocity;
+	}
+
+	public int getPointValue() {
+		return pointValue;
+	}
+
+	public Boolean getIsShooting() {
 		return isShooting;
+	}
+
+	public BufferedImage getAlien() {
+		return alien;
 	}
 	
 	//Setters
-	public void setPointValue(int pointValue) {
-		this.pointValue = pointValue;
-	}
-	
-	public void setVelocity(double velocity) {
-		this.velocity = velocity;		
-	}
-	
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
-	
-	public void setShooting(Boolean shooting) {
-		this.isShooting = shooting;
+
+	public void setVelocity(double velocity) {
+		this.velocity = velocity;
+	}
+
+	public void setPointValue(int pointValue) {
+		this.pointValue = pointValue;
+	}
+
+	public void setIsShooting(Boolean isShooting) {
+		this.isShooting = isShooting;
+	}
+
+	public void setAlien(BufferedImage alien) {
+		this.alien = alien;
 	}
 }

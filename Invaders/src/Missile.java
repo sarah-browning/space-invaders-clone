@@ -25,14 +25,14 @@ public class Missile extends Sprite {
 		
 		g.drawImage(missile, x, y, null);
 	}
-	
+
 	//Getters
-	public BufferedImage getBullet() {
+	public BufferedImage getMissile() {
 		return missile;
 	}
-	
+
 	//Setters
-	public void setBullet(BufferedImage missile) {
+	public void setMissile(BufferedImage missile) {
 		this.missile = missile;
 	}
 }
