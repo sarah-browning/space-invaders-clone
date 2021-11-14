@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class SpaceInvaders extends JFrame implements KeyListener, MouseListener, Runnable {
 	
@@ -20,7 +21,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	private GameController controller;
 	private Menu menu;
 	private HighScore highScore;
-	private static Database db;
+	private static Database db = new Database();
 	
 	private STATE state = STATE.MENU;
 	
@@ -28,6 +29,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	public SpaceInvaders() {
 		super("Space Invaders");
 		setSize(GameProperties.SCREEN_WIDTH, GameProperties.SCREEN_HEIGHT);
+		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,6 +41,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 		
 		//Load Background
 		ImageLoader loader = new ImageLoader();
+		
 		background = loader.loadImage("res/starbkg.jpg");
 		
 		//Load Components
@@ -68,6 +71,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 		running = false;
 		try {
 			t.join();
+			db.closeConnection();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -76,18 +80,34 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	
 	//Check Win/Loss Condition
 	public void checkWinLoss() {
-		//if all aliens are destroyed
-		if (controller.getAlienCount() == 0) {
-			//draw Game Over You Win!
-			System.out.println("You Win!");
-			System.out.println("Your score is " + controller.getScore() + ".");
-			state = STATE.SCORE;
-		//else if the aliens reach the invasion line
-		} else if (controller.getInvasionLine() == true) {
-			//draw Game Over You Lose!
-			System.out.println("You Lose!");
-			System.out.println("Your score is " + controller.getScore() + ".");
-			state = STATE.SCORE;
+		String name;
+		int score;
+		if (state == STATE.GAME) {
+			//if all aliens are destroyed
+			if (controller.getAlienCount() == 0) {
+				System.out.println("You Win!");
+				System.out.println("Your score is " + controller.getScore() + ".");
+				name = JOptionPane.showInputDialog("Congratulations! You won! Please enter your name to save your score.");
+				score = controller.getScore();
+				db.recordScore(name, score);
+				state = STATE.SCORE;
+				
+			//else if the aliens reach the invasion line
+			} else if (controller.getInvasionLine() == true) {
+				System.out.println("You Lose!");
+				System.out.println("Your score is " + controller.getScore() + ".");
+				name = JOptionPane.showInputDialog("GAME OVER! Sorry, you lost. Please enter your name to save your score.");
+				score = controller.getScore();
+				db.recordScore(name, score);
+				state = STATE.SCORE;
+			}
+		}
+	}
+	
+	//Reset Game State
+	public void reset() {
+		if (state == STATE.SCORE) {
+			SpaceInvaders game = new SpaceInvaders();
 		}
 	}
 	
@@ -173,6 +193,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 		SpaceInvaders game = new SpaceInvaders();
 		
 		db.connect();
+		db.createTable();
 		
 		game.setVisible(true);
 		game.start();
@@ -247,6 +268,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 			if (mx >= 500 && mx <= 755) {
 				if (my >= 400 && my <= 455) {
 					//Exit Game
+					db.closeConnection();
 					System.exit(1);
 				}
 			}
@@ -255,6 +277,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 			if (mx >= 175 && mx <= 430) {
 				if (my >= 575 && my <= 630) {
 					//Pressed Play Button
+					reset();
 					state = STATE.GAME;
 				}
 			}
@@ -263,6 +286,7 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 			if (mx >= 470 && mx <= 725) {
 				if (my >= 575 && my <= 630) {
 					//Exit Game
+					db.closeConnection();
 					System.exit(1);
 				}
 			}
@@ -285,5 +309,75 @@ public class SpaceInvaders extends JFrame implements KeyListener, MouseListener,
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	//Getters
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Boolean getRunning() {
+		return running;
+	}
+
+	public Thread getT() {
+		return t;
+	}
+
+	public BufferedImage getBackgroundImg() {
+		return background;
+	}
+
+	public Starship getStarship() {
+		return starship;
+	}
+
+	public GameController getController() {
+		return controller;
+	}
+
+	public Menu getMenu() {
+		return menu;
+	}
+
+	public HighScore getHighScore() {
+		return highScore;
+	}
+
+	public static Database getDb() {
+		return db;
+	}
+
+	//Setters
+	public void setRunning(Boolean running) {
+		this.running = running;
+	}
+
+	public void setT(Thread t) {
+		this.t = t;
+	}
+
+	public void setBackground(BufferedImage background) {
+		this.background = background;
+	}
+
+	public void setStarship(Starship starship) {
+		this.starship = starship;
+	}
+
+	public void setController(GameController controller) {
+		this.controller = controller;
+	}
+
+	public void setMenu(Menu menu) {
+		this.menu = menu;
+	}
+
+	public void setHighScore(HighScore highScore) {
+		this.highScore = highScore;
+	}
+
+	public static void setDb(Database db) {
+		SpaceInvaders.db = db;
 	}
 }
